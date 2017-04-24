@@ -1,0 +1,33 @@
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="tabs.js"></script>
+		<script src="panels.js"></script>
+		<link rel="stylesheet" type="text/css" href="main.css">
+		<link rel="stylesheet" type="text/css" href="tabs.css">
+		<link rel="stylesheet" type="text/css" href="panels.css">
+	</head>
+	<body onload="openTab('Camera')">
+		<main>
+			<div class="tabs">
+				<button class="tablink" id="Cameratab" onclick="openTab('Camera')">Camera</button>
+				<button class="tablink" id="Graphstab" onclick="openTab('Graphs')">Graphs</button>
+				<button class="tablink" id="Logtab" onclick="openTab('Log')">Log</button>
+			</div>
+			
+			<div class="tabcontent" id="Camera">
+				<div class="panel panel-leaf">
+					Panel 1
+				</div>
+			</div>
+			
+			<div class="tabcontent" id="Graphs">
+				
+			</div>
+			
+			<div class="tabcontent" id="Log">
+				
+			</div>
+		</main>
+	</body>
+</html>
