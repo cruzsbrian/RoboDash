@@ -17,6 +17,7 @@ function addPanel(tabName) {
 	var $branchpanel = $(document.createElement("div"));
 	var $oldpanel = $(largestPanel);
 	var $newpanel = $(document.createElement("div"));
-	$branchpanel.addClass("panel panel-branch");
 	
+	if (largestPanel.innerWidth >= largestPanel.innerHeight) {
+		
 	
