@@ -7,7 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="tabs.css">
 		<link rel="stylesheet" type="text/css" href="panels.css">
 	</head>
-	<body onload="openTab('Camera'); addPanel('Camera')">
+	<body onload="openTab('Camera');">
 		<main>
 			<div class="toolbar">
 				<button class="toolbar-button" id="Cameratab" onclick="openTab('Camera')">Camera</button>
@@ -18,17 +18,18 @@
 			</div>
 
 			<div class="tabcontent" id="Camera">
-				<div class="panel panel-leaf">
-					Panel 1
+				<div class="panel panel-leaf" id="0">
 				</div>
 			</div>
 
 			<div class="tabcontent" id="Graphs">
-
+				<div class="panel panel-leaf" id="0">
+				</div>
 			</div>
 
 			<div class="tabcontent" id="Log">
-
+				<div class="panel panel-leaf" id="0">
+				</div>
 			</div>
 		</main>
 	</body>
