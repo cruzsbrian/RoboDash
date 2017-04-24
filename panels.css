@@ -1,12 +1,23 @@
 .panel {
 	display: flex;
-	flex: 1 1 auto;
-	justify-content: center;
-	align-items: center;
+	flex: 2 2 auto;
 }
 
-.panel.panel-full {
+.tabcontent > .panel {
 	margin: 0;
 	padding: 0;
 }
 
+.panel-leaf {
+	/*border: 1px solid #333;*/
+	justify-content: center;
+	align-items: center;
+}
+
+.panel-branch-horizontal {
+	flex-flow: row;
+}
+
+.panel-branch-vertical {
+	flex-flow: column;
+}

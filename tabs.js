@@ -1,6 +1,10 @@
+var currentTab = "";
+
 function openTab(tabName) {
+	currentTab = tabName;
+
 	$(".tabcontent").hide();
-	$(".tablink").removeClass("active");
-	$("#" + tabName).css("display", "flex");
-	$("#" + tabName + "tab").addClass("active");
+	$(".toolbar-button").removeClass("active");
+	$("#" + currentTab).css("display", "flex");
+	$("#" + currentTab + "tab").addClass("active");
 }

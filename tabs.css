@@ -1,10 +1,10 @@
-div.tabs {
+div.toolbar {
 	flex: 0 1 auto;
 	border-bottom: 1px solid #ccc;
 	background-color: #f1f1f1;
 }
 
-div.tabs button {
+div.toolbar button {
 	background-color: inherit;
 	float: left;
 	border: none;
@@ -14,12 +14,16 @@ div.tabs button {
 	transition: 0.2s;
 }
 
-div.tabs button:hover {
+div.toolbar button:hover {
 	background-color: #ddd;
 }
 
-div.tabs button.active {
+div.toolbar button.active {
 	background-color: #ccc;
+}
+
+div.toolbar button#addpanel,button#removepanel {
+	float: right;
 }
 
 .tabcontent {
