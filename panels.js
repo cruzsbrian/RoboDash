@@ -42,34 +42,45 @@ function addPanel() {
 function removePanel() {
 	if (!removing) {
 		removing = true;
-		/*$(".panel.panel-leaf").mouseenter(function() {
-			// Create covering element directly over panel
+		$(".panel.panel-leaf").mouseenter(function() {
+			$panel = $(this);
+			
+			// Create covering element with same id as panel
 			$cover = $(document.createElement("div")).addClass("remove-cover").attr("id", this.id);
+			
+			// Give it the same position
 			$cover.css({
-				top: this.offsetTop,
-				left: this.offsetLeft,
-				width: this.offsetWidth - 1,
-				height: this.offsetHeight - 1,
+				top: this.offsetTop - 1,
+				left: this.offsetLeft - 1,
+				width: this.offsetWidth,
+				height: this.offsetHeight,
 			});
+			
+			// Get rid of the cover when mouse leaves the panel
 			$cover.mouseleave(function () {
-				$cover.fadeOut(function() { $(".remove-cover#" + this.id).remove(); });
+				$cover.remove();
+			});
+			
+			// When clicked, remove cover, move the sibling panel up a level, remove the panel and branch panel
+			$cover.click(function () {
+				$cover.remove();
+				$branchpanel = $panel.parent();
+				$keeppanel = $panel.siblings();
+
+				$keeppanel.insertAfter($branchpanel);
+				$panel.remove();
+				$branchpanel.remove();
 			});
 
+			// Put the cover in the place
 			$cover.appendTo($(this.parentElement));
-			$cover.fadeIn();
-		});*/
-
-		$(".panel.panel-leaf").addClass("panel-removable");
-
-		$(".panel.panel-leaf").click(function() {
-			$branchpanel = $(this).parent();
-			$keeppanel = $(this).siblings();
-
-			$keeppanel.insertAfter($branchpanel);
-			$(this).remove();
-			$branchpanel.remove();
+			$cover.show();
 		});
 
+		// Add class to show pointer cursor
+		$(".panel.panel-leaf").addClass("panel-removable");
+
+		// Make the remove button red
 		$("#removepanel").addClass("active");
 	} else {
 		removing = false;
