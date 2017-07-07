@@ -45,23 +45,24 @@ function removePanel() {
 		removing = true;
 		$(".panel.panel-leaf").mouseenter(function() {
 			$panel = $(this);
-			
+
 			// Create covering element with same id as panel
 			$cover = $(document.createElement("div")).addClass("remove-cover").attr("id", this.id);
-			
-			// Give it the same position
+
+			// Give it the same position, but with 1px added in every direction to take care of borders
+			// TODO: this is really ugly, but CSS is evil
 			$cover.css({
 				top: this.offsetTop - 1,
 				left: this.offsetLeft - 1,
-				width: this.offsetWidth,
-				height: this.offsetHeight,
+				width: this.offsetWidth + 2,
+				height: this.offsetHeight + 2,
 			});
-			
+
 			// Get rid of the cover when mouse leaves the panel
 			$cover.mouseleave(function () {
 				$cover.remove();
 			});
-			
+
 			// When clicked, remove cover, move the sibling panel up a level, remove the panel and branch panel
 			$cover.click(function () {
 				$cover.remove();
