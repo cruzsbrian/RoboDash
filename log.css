@@ -1,0 +1,12 @@
+.logview {
+	font-family: monospace;
+	padding: 0.5em;
+}
+
+.logview .timestamp {
+	color: #1111bb;
+}
+
+.logview .sender {
+	color: #555555;
+}

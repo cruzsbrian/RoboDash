@@ -3,11 +3,13 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="tabs.js"></script>
 		<script src="panels.js"></script>
+		<script src="log.js"></script>
 		<link rel="stylesheet" type="text/css" href="main.css">
 		<link rel="stylesheet" type="text/css" href="tabs.css">
 		<link rel="stylesheet" type="text/css" href="panels.css">
+		<link rel="stylesheet" type="text/css" href="log.css">
 	</head>
-	<body onload="openTab('Camera');">
+	<body onload="openTab('Graphs');">
 		<main>
 			<div class="toolbar">
 				<button class="toolbar-button" id="Cameratab" onclick="openTab('Camera')">Camera</button>
@@ -29,6 +31,8 @@
 
 			<div class="tabcontent" id="Log">
 				<div class="panel panel-leaf" id="0">
+					<div class="logview">
+					</div>
 				</div>
 			</div>
 		</main>
