@@ -4,11 +4,11 @@ function addPanel() {
 	// find largest leaf panel
 	var panels = $("#" + currentTab + " .panel.panel-leaf");
 	var largestPanel = panels[0];
-	var largestArea = panels[0].clientWidth * panels[0].clientHeight;
+	var largestArea = largestPanel.clientWidth * largestPanel.clientHeight;
 	for (var i = 1; i < panels.length; i++) {
 		p = panels[i];
 		a = p.clientWidth * p.clientHeight;
-		if (a  + 1000 >= largestArea) {	// if they're the same I want the last one for aesthetic reasons
+		if (a  + 1000 >= largestArea) {	// +1000 to have a bias for later panels (makes it prettier)
 			largestPanel = p;
 			largestArea = a;
 		}
@@ -24,9 +24,10 @@ function addPanel() {
 	}
 
 	// create a branch panel to replace it containing the old panel and the new one
-	var $branchpanel = $(document.createElement("div")).addClass("panel");
-	var $oldpanel = $(largestPanel);
+	// make a new panel, get the old panel, and make a branch panel to contain both
 	var $newpanel = $(document.createElement("div")).addClass("panel panel-leaf").attr("id", largestId + 1);
+	var $oldpanel = $(largestPanel);
+	var $branchpanel = $(document.createElement("div")).addClass("panel");
 
 	if (largestPanel.clientWidth >= largestPanel.clientHeight * 1.25) { // *1.25 for better aspect ratio
 		$branchpanel.addClass("panel-branch-horizontal");
