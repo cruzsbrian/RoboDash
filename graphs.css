@@ -1,0 +1,11 @@
+.graphview {
+	display: flex;
+	flex: 1 1 auto;
+
+	justify-content: center;
+	align-items: center;
+}
+
+.graphview p {
+	color: #666;
+}

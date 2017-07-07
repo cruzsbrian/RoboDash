@@ -35,6 +35,12 @@ function addPanel() {
 		$branchpanel.addClass("panel-branch-vertical");
 	}
 
+	if (currentTab == "Graphs") {
+		makeGraphView($newpanel);
+	} else if (currentTab == "Log") {
+		makeLogView($newpanel);
+	}
+
 	$branchpanel.insertAfter($oldpanel);
 	$oldpanel.detach().appendTo($branchpanel);
 	$newpanel.appendTo($branchpanel);
