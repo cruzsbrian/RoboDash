@@ -1,0 +1,35 @@
+.shade {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+	background: #000;
+	opacity: 0;
+	display: none;
+}
+
+.settings {
+	position: absolute;
+	width: 600px;
+	left: 50%;
+	top: 20%;
+	margin-left: -320px;
+	min-height: 25%;
+	padding: 20px;
+	background: white;
+	border: solid 1px #666;
+	display: none;
+}
+
+.settings input[type=text] {
+	border: none;
+	outline: 0;
+	background: #efefef;
+	padding: 3px;
+}
+
+.settings h3 {
+	margin-top: 0;
+	text-align: center;
+}
