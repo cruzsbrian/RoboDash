@@ -76,6 +76,29 @@ function saveGraphSettings(button) {
 
 	graphs[id].settings.title = settingsForm["title"].value;
 
+	// count number of value axes by counting number of .value-display inputs
+	var numAxes = $("#graphSettingsForm input.value-display").length;
+
+	// save each value axis
+	for (var i = 0; i < numAxes; i++) {
+		// get each value from the input
+		var m_displayName = settingsForm["value-display" + i].value;
+		var m_dataField = settingsForm["value-data" + i].value;
+		var m_min = settingsForm["value-min" + i].value;
+		var m_max = settingsForm["value-max" + i].value;
+
+		// put them in a valueAxis settings object
+		var axis = {
+			displayName: m_displayName,
+			dataField: m_dataField,
+			min: m_min,
+			max: m_max
+		};
+
+		// add the axis to the settings object
+		graphs[id].settings.valueAxes[i] = axis;
+	}
+
 	hideSettings($(".graphSettings"));
 }
 
@@ -90,7 +113,7 @@ function addValueAxisToForm(axisSettings) {
 
 	// find highest axis number
 	var axisInputs = $(".value-display");
-	var largestId = 0;
+	var largestId = -1;
 	for (var i = 0; i < axisInputs.length; i++) {
 		var id = parseInt($(axisInputs[i]).attr("id"));
 		if (id > largestId) {
@@ -118,7 +141,7 @@ function addValueAxisToForm(axisSettings) {
 
 	// add line break followed by the two inputs before the plus button
 	// make sure not to add line breaks before the first set of inputs
-	if (largestId != 0) {
+	if (largestId != -1) {
 		$("<br><br>").insertBefore($("a.add-value-axis"));
 	}
 	$displayNameInput.insertBefore($("a.add-value-axis"));
