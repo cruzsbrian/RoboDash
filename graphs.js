@@ -43,6 +43,64 @@ function makeGraphView($panel) {
 	$panel.append($graphView);
 }
 
+function makeGraph(id) {
+	var g = graphs[id];
+
+	g.chart = new AmCharts.AmSerialChart();
+	g.chart.dataProvider = graphData;
+
+	// set time as horizontal axis
+	g.chart.categoryField = "t";
+
+	//var voltageAxis = new AmCharts.ValueAxis();
+	//voltageAxis.id = "voltage";
+	//voltageAxis.title = "Voltage";
+	//g.chart.addValueAxis(voltageAxis);
+
+
+	// make each value axis by looping through the settings
+	for (var i = 0; i < g.settings.valueAxes.length; i++) {
+		var axisSettings = g.settings.valueAxes[i];
+
+		// make the axis
+		var axis = new AmCharts.ValueAxis();
+		axis.id = axisSettings.dataField;
+		axis.title = axisSettings.displayName;
+		if (axisSettings.min != '') {
+			axis.minimum = parseInt(axisSettings.min);
+		}
+		if (axisSettings.max != '') {
+			axis.maximum = parseInt(axisSettings.max);
+		}
+
+		g.chart.addValueAxis(axis);
+
+		// make the graph (line)
+		var lineGraph = new AmCharts.AmGraph();
+		lineGraph.type = "line";
+		lineGraph.valueField = axisSettings.dataField;
+		lineGraph.title = axisSettings.displayName;
+		lineGraph.valueAxis = axisSettings.dataField;
+
+		g.chart.addGraph(lineGraph);
+	}
+
+	// add cursor to go through data
+	var cursor = new AmCharts.ChartCursor();
+	cursor.cursorPosition = "mouse";
+	g.chart.addChartCursor(cursor);
+
+	// add legend to tell lines apart
+	var legend = new AmCharts.AmLegend();
+	legend.align = "left";
+	legend.markerType = "line";
+	legend.markerBorderThickness = 3;
+	legend.valueText = "";
+	g.chart.addLegend(legend);
+
+	g.chart.write("graph" + id);
+}
+
 function configGraph(id) {
 	// load the settings for that graph
 	loadGraphSettings(id);
@@ -52,6 +110,7 @@ function configGraph(id) {
 	$(".graphSettings .settings-button").attr("id", id);
 }
 
+// settings stuff
 function loadGraphSettings(id) {
 	// get the graph object's settings
 	var settings = graphs[id].settings;
@@ -100,6 +159,7 @@ function saveGraphSettings(button) {
 	}
 
 	hideSettings($(".graphSettings"));
+	makeGraph(id);
 }
 
 function addValueAxisToForm(axisSettings) {
