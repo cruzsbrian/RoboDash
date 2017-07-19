@@ -40,9 +40,12 @@
 			<h3>Graph Settings</h3>
 			<form name="graphSettings" class="settings-form" id="graphSettingsForm">
 				<input name="title" id="title" type="text" placeholder="Title">
+				<br><br>
+				<input name="min" id="min" type="text" placeholder="Min (leave black for auto)">
+				<input name="max" id="max" type="text" placeholder="Max (leave black for auto)">
 				<br>
 				<div class="settings-group" id="value-axes-group">
-					<p>Value Axes</p>
+					<p>Lines</p>
 					<!-- Value axis inputs will be inserted here by javascript -->
 					<a class="add-settings add-value-axis clickable" onclick="addValueAxisToForm()">+</a>
 				</div>

@@ -6,11 +6,11 @@ function Graph() {
 	// blank settings (shows placeholders in inputs)
 	this.settings = {
 		title: '',
+		min: '',
+		max: '',
 		valueAxes: [{
 			displayName: '',
-			dataField: '',
-			min: '',
-			max: ''
+			dataField: ''
 		}]
 	};
 
@@ -47,6 +47,7 @@ function makeGraph(id) {
 	var g = graphs[id];
 
 	g.chart = new AmCharts.AmSerialChart();
+	g.chart.fontFamily = "Arial";
 	g.chart.dataProvider = graphData;
 
 	// set time as horizontal axis
@@ -57,30 +58,25 @@ function makeGraph(id) {
 	//voltageAxis.title = "Voltage";
 	//g.chart.addValueAxis(voltageAxis);
 
+	// make the axis
+	var axis = new AmCharts.ValueAxis();
+	if (g.settings.min != '') {
+		axis.minimum = parseInt(g.settings.min);
+	}
+	if (g.settings.max != '') {
+		axis.maximum = parseInt(g.settings.max);
+	}
+	g.chart.addValueAxis(axis);
 
-	// make each value axis by looping through the settings
+	// make each line by looping through the settings
 	for (var i = 0; i < g.settings.valueAxes.length; i++) {
 		var axisSettings = g.settings.valueAxes[i];
-
-		// make the axis
-		var axis = new AmCharts.ValueAxis();
-		axis.id = axisSettings.dataField;
-		axis.title = axisSettings.displayName;
-		if (axisSettings.min != '') {
-			axis.minimum = parseInt(axisSettings.min);
-		}
-		if (axisSettings.max != '') {
-			axis.maximum = parseInt(axisSettings.max);
-		}
-
-		g.chart.addValueAxis(axis);
 
 		// make the graph (line)
 		var lineGraph = new AmCharts.AmGraph();
 		lineGraph.type = "line";
 		lineGraph.valueField = axisSettings.dataField;
 		lineGraph.title = axisSettings.displayName;
-		lineGraph.valueAxis = axisSettings.dataField;
 
 		g.chart.addGraph(lineGraph);
 	}
@@ -134,6 +130,8 @@ function saveGraphSettings(button) {
 	var settingsForm = document.forms["graphSettings"];
 
 	graphs[id].settings.title = settingsForm["title"].value;
+	graphs[id].settings.min = settingsForm["min"].value;
+	graphs[id].settings.max = settingsForm["max"].value;
 
 	// count number of value axes by counting number of .value-display inputs
 	var numAxes = $("#graphSettingsForm input.value-display").length;
@@ -143,15 +141,11 @@ function saveGraphSettings(button) {
 		// get each value from the input
 		var m_displayName = settingsForm["value-display" + i].value;
 		var m_dataField = settingsForm["value-data" + i].value;
-		var m_min = settingsForm["value-min" + i].value;
-		var m_max = settingsForm["value-max" + i].value;
 
 		// put them in a valueAxis settings object
 		var axis = {
 			displayName: m_displayName,
 			dataField: m_dataField,
-			min: m_min,
-			max: m_max
 		};
 
 		// add the axis to the settings object
@@ -166,9 +160,7 @@ function addValueAxisToForm(axisSettings) {
 	// allow leaving out axisSettings to go to blank axis
 	axisSettings = axisSettings || {
 		displayName: '',
-		dataField: '',
-		min: '',
-		max: ''
+		dataField: ''
 	};
 
 	// find highest axis number
@@ -190,14 +182,6 @@ function addValueAxisToForm(axisSettings) {
 		+ "' class='value-data' id='" + (largestId + 1)
 		+ "' type='text' placeholder='Data Field' value='" + axisSettings.dataField
 		+ "'>");
-	var $minInput = $("<input name='value-min" + (largestId + 1)
-		+ "' class='value-min' id='" + (largestId + 1)
-		+ "' type='text' placeholder='Min (leave blank for auto)' value='" + axisSettings.min
-		+ "'>");
-	var $maxInput = $("<input name='value-max" + (largestId + 1)
-		+ "' class='value-max' id='" + (largestId + 1)
-		+ "' type='text' placeholder='Max (leave blank for auto)' value='" + axisSettings.max
-		+ "'>");
 
 	// add line break followed by the two inputs before the plus button
 	// make sure not to add line breaks before the first set of inputs
@@ -206,8 +190,5 @@ function addValueAxisToForm(axisSettings) {
 	}
 	$displayNameInput.insertBefore($("a.add-value-axis"));
 	$dataFieldInput.insertBefore($("a.add-value-axis"));
-	$("<br><br>").insertBefore($("a.add-value-axis"));
-	$minInput.insertBefore($("a.add-value-axis"));
-	$maxInput.insertBefore($("a.add-value-axis"));
 }
 
