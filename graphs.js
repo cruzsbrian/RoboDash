@@ -43,6 +43,7 @@ function makeGraphView($panel) {
 	$panel.append($graphView);
 }
 
+// use AmCharts to write a graph to the DOM given a Graph object's id
 function makeGraph(id) {
 	var g = graphs[id];
 
@@ -52,11 +53,6 @@ function makeGraph(id) {
 
 	// set time as horizontal axis
 	g.chart.categoryField = "t";
-
-	//var voltageAxis = new AmCharts.ValueAxis();
-	//voltageAxis.id = "voltage";
-	//voltageAxis.title = "Voltage";
-	//g.chart.addValueAxis(voltageAxis);
 
 	// make the axis
 	var axis = new AmCharts.ValueAxis();
@@ -78,6 +74,12 @@ function makeGraph(id) {
 		lineGraph.valueField = axisSettings.dataField;
 		lineGraph.title = axisSettings.displayName;
 
+		// define a function to round the value and convert it to a string for the balloon text
+		lineGraph.balloonFunction = function(graphdata, graphobject) {
+			var val = parseFloat(graphdata.values.value).toFixed(3);
+			return val.toString();
+		};
+
 		g.chart.addGraph(lineGraph);
 	}
 
@@ -97,6 +99,7 @@ function makeGraph(id) {
 	g.chart.write("graph" + id);
 }
 
+// open dialog so user can edit settings of a graph
 function configGraph(id) {
 	// load the settings for that graph
 	loadGraphSettings(id);
@@ -107,6 +110,7 @@ function configGraph(id) {
 }
 
 // settings stuff
+// load settings from a Graph object into a settings dialog
 function loadGraphSettings(id) {
 	// get the graph object's settings
 	var settings = graphs[id].settings;
