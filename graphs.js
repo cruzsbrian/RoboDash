@@ -120,6 +120,10 @@ function loadGraphSettings(id) {
 
 	// set the title value
 	$("#graphSettingsForm #title").val(settings.title);
+	
+	// set the min and max values
+	$("#graphSettingsForm #min").val(settings.min);
+	$("#graphSettingsForm #max").val(settings.max);
 
 	// clear all the value axes and the line breaks between them
 	$("#value-axes-group input").remove();
