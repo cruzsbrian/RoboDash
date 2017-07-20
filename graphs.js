@@ -105,8 +105,11 @@ function configGraph(id) {
 	loadGraphSettings(id);
 	showSettings($(".graphSettings"));
 
-	// tell the button what graph to alter when saving
-	$(".graphSettings .settings-button").attr("id", id);
+	// have the form save the right graph when submitted
+	$("#graphSettingsForm").submit(function(e) {
+		saveGraphSettings(id);
+		e.preventDefault();
+	});
 }
 
 // settings stuff
@@ -128,9 +131,7 @@ function loadGraphSettings(id) {
 	}
 }
 
-function saveGraphSettings(button) {
-	var id = parseInt($(button).attr("id"));
-
+function saveGraphSettings(id) {
 	var settingsForm = document.forms["graphSettings"];
 
 	graphs[id].settings.title = settingsForm["title"].value;
@@ -156,7 +157,12 @@ function saveGraphSettings(button) {
 		graphs[id].settings.valueAxes[i] = axis;
 	}
 
+	// hide the settings
 	hideSettings($(".graphSettings"));
+	
+	// clear the form submit handler so another graph can use it
+	$("#graphSettingsForm").unbind("submit");
+	
 	makeGraph(id);
 }
 
