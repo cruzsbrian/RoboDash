@@ -97,6 +97,16 @@ function makeGraph(id) {
 	g.chart.addLegend(legend);
 
 	g.chart.write("graph" + id);
+
+	// create settings button
+	var $settingsButton = $("<a class='graph-settings-button clickable' id='" + id + "'>&#x26ed;</a>");
+	$settingsButton.click(function() {
+		configGraph(id);
+	});
+	$("#graph" + id).append($settingsButton);
+
+	// unbind click from the graphView element
+	$("#graph" + id).unbind("click");
 }
 
 // open dialog so user can edit settings of a graph

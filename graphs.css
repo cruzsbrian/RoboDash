@@ -4,8 +4,19 @@
 
 	justify-content: center;
 	align-items: center;
+	position: relative;
 }
 
 .graphview p {
 	color: #666;
+}
+
+.graph-settings-button {
+	position: absolute;
+	top: 0px;
+	right: 5px;
+	
+	font-size: 1.5em;
+	color: #888;
+
 }
