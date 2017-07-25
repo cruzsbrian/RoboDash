@@ -15,7 +15,6 @@
 	left: 50%;
 	top: 20%;
 	margin-left: -220px;
-	min-height: 25%;
 	padding: 20px;
 	background: white;
 	border: solid 1px #666;
@@ -39,12 +38,20 @@
 	text-align: center;
 }
 
+.settings p.reminder {
+	font-size: 0.8em;
+	margin-bottom: 0;
+}
+
 .settings .settings-group {
 	margin: 1.5em 0;
 }
 
 .settings #title {
 	font-size: 1.25em;
+}
+
+.settings .full-width {
 	width: 100%;
 }
 

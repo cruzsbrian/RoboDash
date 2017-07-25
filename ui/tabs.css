@@ -4,9 +4,28 @@ div.toolbar {
 	background-color: #f1f1f1;
 }
 
+.toolbar-left {
+	float: left;
+	width: 20%;
+	display: block;
+	text-align: left;
+}
+
+.toolbar-right {
+	float: right;
+	width: 20%;
+	display: block;
+	text-align: right;
+}
+
+.toolbar-center {
+	width: 80%;
+	display: block;
+	text-align: center;
+}
+
 div.toolbar button {
 	background-color: inherit;
-	float: left;
 	border: none;
 	outline: none;
 	cursor: pointer;
@@ -24,6 +43,11 @@ div.toolbar button.active {
 
 div.toolbar button#addpanel,button#removepanel {
 	float: right;
+}
+
+div.toolbar button#connect {
+	float: none;
+	margin: 0 auto;
 }
 
 div.toolbar button#removepanel.active {

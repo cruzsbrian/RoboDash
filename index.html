@@ -8,6 +8,7 @@
 		<script src="ui/settings.js"></script>
 		<script src="log.js"></script>
 		<script src="graphs.js"></script>
+		<script src="connection.js"></script>
 		<script src="sample-data.js"></script>
 		<link rel="stylesheet" type="text/css" href="main.css">
 		<link rel="stylesheet" type="text/css" href="ui/tabs.css">
@@ -19,10 +20,17 @@
 	<body onload="openTab('Graphs');">
 		<main>
 			<div class="toolbar">
-				<button class="toolbar-button" id="Graphstab" onclick="openTab('Graphs')">Graphs</button>
-				<button class="toolbar-button" id="Logtab" onclick="openTab('Log')">Log</button>
-				<button class="toolbar-button" id="addpanel" onclick="addPanel()">+</button>
-				<button class="toolbar-button" id="removepanel" onclick="removePanel()">-</button>
+				<div class="toolbar-left">
+					<button class="toolbar-button" id="Graphstab" onclick="openTab('Graphs')">Graphs</button>
+					<button class="toolbar-button" id="Logtab" onclick="openTab('Log')">Log</button>
+				</div>
+				<div class="toolbar-right">
+					<button class="toolbar-button" id="addpanel" onclick="addPanel()">+</button>
+					<button class="toolbar-button" id="removepanel" onclick="removePanel()">-</button>
+				</div>
+				<div class="toolbar-center">
+					<button class="toolbar-button" id="connect" onclick="showConnectionSettings()">Connect</button>
+				</div>
 			</div>
 
 			<div class="tabcontent" id="Graphs">
@@ -35,11 +43,13 @@
 				</div>
 			</div>
 		</main>
+
 		<div class="shade"></div>
+
 		<div class="settings graphSettings">
 			<h3>Graph Settings</h3>
 			<form name="graphSettings" class="settings-form" id="graphSettingsForm">
-				<input name="title" id="title" type="text" placeholder="Title">
+				<input name="title" id="title" class="full-width" type="text" placeholder="Title">
 				<br><br>
 				<input name="min" id="min" type="text" placeholder="Min (leave black for auto)">
 				<input name="max" id="max" type="text" placeholder="Max (leave black for auto)">
@@ -51,6 +61,17 @@
 				</div>
 				<button type="submit" class="settings-button clickable">Done</button>
 			</form>
+		</div>
+
+		<div class="settings connectionSettings">
+			<h3>Connection Settings</h3>
+			<form name="connectionSettings" class="settings-form" id="graphSettingsForm">
+				<input name="ip" id="ip" class="full-width" type="text" placeholder="RoboRIO Address (10.TE.AM.2)">
+				<br><br>
+				<input name="port" id="port" class="full-width" type="text" placeholder="Port Number">
+				<button type="submit" class="settings-button clickable" onclick="connect()">Connect</button>
+			</form>
+			<p class="reminder">Make sure the robot is on and Log.startServer(port) has been called</p>
 		</div>
 	</body>
 	<script>
