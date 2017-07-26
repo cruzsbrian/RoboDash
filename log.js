@@ -8,9 +8,9 @@ function addLog(data) {
 	var $senderSpan = $(document.createElement("span")).addClass("sender");
 	var $messageSpan = $(document.createElement("span")).addClass("message");
 
-	$timestampSpan.text("[" + data.time + "]");
+	$timestampSpan.text("[" + data.t + "]");
 	$senderSpan.text("[" + data.sender + "]");
-	$messageSpan.text(data.message);
+	$messageSpan.text(data.msg);
 
 	$(".logview").append($timestampSpan, $senderSpan, $messageSpan, "<br>");
 }
