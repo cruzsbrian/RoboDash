@@ -2,3 +2,6 @@
 *~
 *.swp
 *.swo
+
+# sample data
+sample-data.js
