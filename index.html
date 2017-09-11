@@ -8,6 +8,7 @@
 		<script src="ui/settings.js"></script>
 		<script src="log.js"></script>
 		<script src="graphs.js"></script>
+		<script src="constants.js"></script>
 		<script src="connection.js"></script>
 		<script src="sample-data.js"></script>
 		<link rel="stylesheet" type="text/css" href="main.css">
@@ -16,6 +17,7 @@
 		<link rel="stylesheet" type="text/css" href="ui/settings.css">
 		<link rel="stylesheet" type="text/css" href="log.css">
 		<link rel="stylesheet" type="text/css" href="graphs.css">
+		<link rel="stylesheet" type="text/css" href="constants.css">
 	</head>
 	<body onload="openTab('Graphs');">
 		<main>
@@ -23,6 +25,7 @@
 				<div class="toolbar-left">
 					<button class="toolbar-button" id="Graphstab" onclick="openTab('Graphs')">Graphs</button>
 					<button class="toolbar-button" id="Logtab" onclick="openTab('Log')">Log</button>
+					<button class="toolbar-button" id="Constantstab" onclick="openTab('Constants')">Constants</button>
 				</div>
 				<div class="toolbar-right">
 					<button class="toolbar-button" id="addpanel" onclick="addPanel()">+</button>
@@ -40,6 +43,14 @@
 
 			<div class="tabcontent" id="Log">
 				<div class="panel panel-leaf" id="0">
+				</div>
+			</div>
+
+			<div class="tabcontent" id="Constants">
+				<div class="settings constantsSettings" id="0">
+					<form name="constants" class="settings-form" id="constantsForm">
+						<a class="add-settings add-constant clickable" onclick="addConstantToForm()">+</a>
+					</form>
 				</div>
 			</div>
 		</main>
@@ -65,11 +76,11 @@
 
 		<div class="settings connectionSettings">
 			<h3>Connection Settings</h3>
-			<form name="connectionSettings" class="settings-form" id="graphSettingsForm">
+			<form name="connectionSettings" class="settings-form" id="connectionSettingsForm">
 				<input name="ip" id="ip" class="full-width" type="text" placeholder="RoboRIO Address (10.TE.AM.2)">
 				<br><br>
 				<input name="port" id="port" class="full-width" type="text" placeholder="Port Number">
-				<button type="submit" class="settings-button clickable" onclick="connect()">Connect</button>
+				<button type="submit" class="settings-button clickable">Connect</button>
 			</form>
 			<p class="reminder">Make sure the robot is on and Log.startServer(port) has been called</p>
 		</div>
@@ -77,5 +88,6 @@
 	<script>
 		makeGraphView($("#Graphs .panel-leaf#0"));
 		makeLogView($("#Log .panel-leaf#0"));
+		addConstantToForm();
 	</script>
 </html>

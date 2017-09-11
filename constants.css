@@ -1,0 +1,8 @@
+.constantsSettings {
+	display: block;
+	border: none;
+}
+
+.constantsSettings input[type=text] {
+	font-family: monospace;
+}
