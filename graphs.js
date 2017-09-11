@@ -109,6 +109,13 @@ function makeGraph(id) {
 	$("#graph" + id).unbind("click");
 }
 
+// refreshes data on all graphs
+function updateGraphs() {
+	for (var i = 0; i < graphs.length; i++) {
+		graphs[i].chart.validateData();
+	}
+}
+
 // open dialog so user can edit settings of a graph
 function configGraph(id) {
 	// load the settings for that graph
@@ -130,7 +137,7 @@ function loadGraphSettings(id) {
 
 	// set the title value
 	$("#graphSettingsForm #title").val(settings.title);
-	
+
 	// set the min and max values
 	$("#graphSettingsForm #min").val(settings.min);
 	$("#graphSettingsForm #max").val(settings.max);
@@ -173,10 +180,10 @@ function saveGraphSettings(id) {
 
 	// hide the settings
 	hideSettings($(".graphSettings"));
-	
+
 	// clear the form submit handler so another graph can use it
 	$("#graphSettingsForm").unbind("submit");
-	
+
 	makeGraph(id);
 }
 
