@@ -14,3 +14,7 @@ main {
 .clickable:hover {
 	cursor: pointer;
 }
+
+.center-inline {
+	text-align: center;
+}

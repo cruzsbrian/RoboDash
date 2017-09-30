@@ -1,6 +1,7 @@
 .constantsSettings {
 	display: block;
 	border: none;
+	top: 10%;
 }
 
 .constantsSettings input[type=text] {

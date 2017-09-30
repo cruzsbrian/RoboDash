@@ -45,6 +45,7 @@
 
 .settings .settings-group {
 	margin: 1.5em 0;
+	width: 100%;
 }
 
 .settings #title {
@@ -72,3 +73,9 @@
 .settings-button:hover {
 	background: #ccc;
 }
+
+.inline-button {
+	display: inline;
+	margin: 2em 2em;
+}
+

@@ -26,7 +26,7 @@ function addConstantToForm(constant) {
 		+ "' type='text' placeholder='val' value'" + constant.val
 		+ "'>");
 
-	// add line break followed by the two tinputs before the plus button
+	// add line break followed by the two inputs before the plus button
 	// make sure not to add line breaks before the first set of inputs
 	if (largestId != -1) {
 		$("<br><br>").insertBefore($("a.add-constant"));
