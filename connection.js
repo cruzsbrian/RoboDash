@@ -42,3 +42,12 @@ function connect() {
 
 	hideSettings($(".connectionSettings"));
 }
+
+function send(data) {
+	console.log(data);
+	if (ws && ws.readyState === ws.OPEN) {
+		ws.send(JSON.stringify(data));
+	} else {
+		console.log("Sending failed b/c WebSocket is not open.");
+	}
+}

@@ -51,3 +51,17 @@ function collectConstants() {
 
 	return result;
 }
+
+// send constants to the robot
+// make defaults true if they should become defaults
+function sendConstants(defaults) {
+	defaults = defaults || false;
+
+	var data = {
+		type: "constants",
+		defaults: defaults,
+		obj: collectConstants()
+	};
+
+	send(data);
+}
