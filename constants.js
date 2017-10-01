@@ -14,7 +14,6 @@ function addConstantToForm(constant) {
 			largestId = id;
 		}
 	}
-	console.log(largestId);
 
 	// make new inputs
 	var $keyInput = $("<input name='key" + (largestId + 1)
@@ -33,4 +32,22 @@ function addConstantToForm(constant) {
 	}
 	$keyInput.insertBefore($("a.add-constant"));
 	$valInput.insertBefore($("a.add-constant"));
+}
+
+
+// returns an array of all the constants
+function collectConstants() {
+	var result = [];
+
+	var constantsForm = document.forms["constants"];
+	var constantInputs = $(".constant-key");
+	for (var i = 0; i < constantInputs.length; i++) {
+		var id = $(constantInputs[i]).attr("id");
+
+		var key = constantsForm["key" + id].value;
+		var val = constantsForm["val" + id].value;
+		result.push({key: key, val: val});
+	}
+
+	return result;
 }
