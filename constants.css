@@ -1,9 +1,13 @@
 .constantsSettings {
-	display: block;
-	border: none;
-	top: 10%;
+	width: 50%;
+	margin: 3em auto;
 }
 
 .constantsSettings input[type=text] {
 	font-family: monospace;
+}
+
+.constantsSettings button {
+	margin-left: 0.5em;
+	margin-right: 0.5em;
 }

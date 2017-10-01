@@ -25,7 +25,7 @@
 	margin: 0;
 }
 
-.settings input[type=text] {
+.settings-form input[type=text] {
 	border: none;
 	border-bottom: 2px solid #888;
 	outline: 0;

@@ -18,3 +18,9 @@ main {
 .center-inline {
 	text-align: center;
 }
+
+.center-div {
+	margin-left: auto;
+	margin-right: auto;
+	width: fit-content;
+}
