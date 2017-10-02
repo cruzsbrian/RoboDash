@@ -65,3 +65,12 @@ function sendConstants(defaults) {
 
 	send(data);
 }
+
+function requestConstantDefaults() {
+	var data = {
+		type: "request",
+		obj: "constants"
+	};
+
+	send(data);
+}
