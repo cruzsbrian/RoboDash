@@ -1,62 +1,66 @@
 div.toolbar {
-	flex: 0 1 auto;
-	border-bottom: 1px solid #ccc;
-	background-color: #f1f1f1;
+    flex: 0 1 auto;
+    border-bottom: 1px solid #ccc;
+    background-color: #f1f1f1;
 }
 
 .toolbar-left {
-	float: left;
-	width: 20%;
-	display: block;
-	text-align: left;
+    float: left;
+    width: 20%;
+    display: block;
+    text-align: left;
 }
 
 .toolbar-right {
-	float: right;
-	width: 20%;
-	display: block;
-	text-align: right;
+    float: right;
+    width: 20%;
+    display: block;
+    text-align: right;
 }
 
 .toolbar-center {
-	width: 80%;
-	display: block;
-	text-align: center;
+    width: 80%;
+    display: block;
+    text-align: center;
 }
 
 div.toolbar button {
-	background-color: inherit;
-	border: none;
-	outline: none;
-	cursor: pointer;
-	padding: 5px 16px;
-	transition: 0.2s;
+    background-color: inherit;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 5px 16px;
+    transition: 0.2s;
 }
 
 div.toolbar button:hover {
-	background-color: #ddd;
+    background-color: #ddd;
 }
 
 div.toolbar button.active {
-	background-color: #ccc;
+    background-color: #ccc;
 }
 
 div.toolbar button#addpanel,button#removepanel {
-	float: right;
+    float: right;
 }
 
 div.toolbar button#connect {
-	float: none;
-	margin: 0 auto;
+    float: none;
+    margin: 0 auto;
+}
+
+.button-green {
+    background: #0d4 !important;
 }
 
 div.toolbar button#removepanel.active {
-	background-color: #f55;
+    background-color: #f55;
 }
 
 .tabcontent {
-	display: none;
-	flex: 1 1 auto;
-	padding: 0;
-	border-top: none;
+    display: none;
+    flex: 1 1 auto;
+    padding: 0;
+    border-top: none;
 }

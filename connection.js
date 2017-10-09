@@ -35,7 +35,15 @@ function connect() {
     ws = new WebSocket("ws://" + ip + ":" + port + "/");
 
     ws.onopen = function(evt) {
-        console.log("connected");
+        // change connect button to say "connected" and be green
+        $("button#connect").text("Connected")
+            .addClass("button-green");
+    };
+
+    ws.onclose = function(evt) {
+        // change connect button back to saying "connect" and normal color
+        $("button#connect").text("Connect")
+            .removeClass("button-green");
     };
 
     ws.onmessage = function(evt) {
