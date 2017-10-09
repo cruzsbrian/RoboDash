@@ -47,57 +47,6 @@ function makeGraphView($panel) {
 function makeGraph(id) {
 	var g = graphs[id];
 
-	g.chart = new AmCharts.AmSerialChart();
-	g.chart.fontFamily = "Arial";
-	g.chart.dataProvider = graphData;
-
-	// set time as horizontal axis
-	g.chart.categoryField = "t";
-
-	// make the axis
-	var axis = new AmCharts.ValueAxis();
-	if (g.settings.min != '') {
-		axis.minimum = parseInt(g.settings.min);
-	}
-	if (g.settings.max != '') {
-		axis.maximum = parseInt(g.settings.max);
-	}
-	g.chart.addValueAxis(axis);
-
-	// make each line by looping through the settings
-	for (var i = 0; i < g.settings.valueAxes.length; i++) {
-		var axisSettings = g.settings.valueAxes[i];
-
-		// make the graph (line)
-		var lineGraph = new AmCharts.AmGraph();
-		lineGraph.type = "line";
-		lineGraph.valueField = axisSettings.dataField;
-		lineGraph.title = axisSettings.displayName;
-
-		// define a function to round the value and convert it to a string for the balloon text
-		lineGraph.balloonFunction = function(graphdata, graphobject) {
-			var val = parseFloat(graphdata.values.value).toFixed(3);
-			return val.toString();
-		};
-
-		g.chart.addGraph(lineGraph);
-	}
-
-	// add cursor to go through data
-	var cursor = new AmCharts.ChartCursor();
-	cursor.cursorPosition = "mouse";
-	g.chart.addChartCursor(cursor);
-
-	// add legend to tell lines apart
-	var legend = new AmCharts.AmLegend();
-	legend.align = "left";
-	legend.markerType = "line";
-	legend.markerBorderThickness = 3;
-	legend.valueText = "";
-	g.chart.addLegend(legend);
-
-	g.chart.write("graph" + id);
-
 	// create settings button
 	var $settingsButton = $("<a class='graph-settings-button clickable' id='" + id + "'>&#x26ed;</a>");
 	$settingsButton.click(function() {
@@ -112,7 +61,6 @@ function makeGraph(id) {
 // refreshes data on all graphs
 function updateGraphs() {
 	for (var i = 0; i < graphs.length; i++) {
-		graphs[i].chart.validateData();
 	}
 }
 
