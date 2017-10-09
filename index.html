@@ -1,101 +1,101 @@
 <html>
-	<head>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script src="amcharts/amcharts.js" type="text/javascript"></script>
-		<script src="amcharts/serial.js" type="text/javascript"></script>
-		<script src="ui/tabs.js"></script>
-		<script src="ui/panels.js"></script>
-		<script src="ui/settings.js"></script>
-		<script src="log.js"></script>
-		<script src="graphs.js"></script>
-		<script src="constants.js"></script>
-		<script src="connection.js"></script>
-		<script src="sample-data.js"></script>
-		<link rel="stylesheet" type="text/css" href="main.css">
-		<link rel="stylesheet" type="text/css" href="ui/tabs.css">
-		<link rel="stylesheet" type="text/css" href="ui/panels.css">
-		<link rel="stylesheet" type="text/css" href="ui/settings.css">
-		<link rel="stylesheet" type="text/css" href="log.css">
-		<link rel="stylesheet" type="text/css" href="graphs.css">
-		<link rel="stylesheet" type="text/css" href="constants.css">
-	</head>
-	<body onload="openTab('Graphs');">
-		<main>
-			<div class="toolbar">
-				<div class="toolbar-left">
-					<button class="toolbar-button" id="Graphstab" onclick="openTab('Graphs')">Graphs</button>
-					<button class="toolbar-button" id="Logtab" onclick="openTab('Log')">Log</button>
-					<button class="toolbar-button" id="Constantstab" onclick="openTab('Constants')">Constants</button>
-				</div>
-				<div class="toolbar-right">
-					<button class="toolbar-button" id="addpanel" onclick="addPanel()">+</button>
-					<button class="toolbar-button" id="removepanel" onclick="removePanel()">-</button>
-				</div>
-				<div class="toolbar-center">
-					<button class="toolbar-button" id="connect" onclick="showConnectionSettings()">Connect</button>
-				</div>
-			</div>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="amcharts/amcharts.js" type="text/javascript"></script>
+        <script src="amcharts/serial.js" type="text/javascript"></script>
+        <script src="ui/tabs.js"></script>
+        <script src="ui/panels.js"></script>
+        <script src="ui/settings.js"></script>
+        <script src="log.js"></script>
+        <script src="graphs.js"></script>
+        <script src="constants.js"></script>
+        <script src="connection.js"></script>
+        <script src="sample-data.js"></script>
+        <link rel="stylesheet" type="text/css" href="main.css">
+        <link rel="stylesheet" type="text/css" href="ui/tabs.css">
+        <link rel="stylesheet" type="text/css" href="ui/panels.css">
+        <link rel="stylesheet" type="text/css" href="ui/settings.css">
+        <link rel="stylesheet" type="text/css" href="log.css">
+        <link rel="stylesheet" type="text/css" href="graphs.css">
+        <link rel="stylesheet" type="text/css" href="constants.css">
+    </head>
+    <body onload="openTab('Graphs');">
+        <main>
+        <div class="toolbar">
+            <div class="toolbar-left">
+                <button class="toolbar-button" id="Graphstab" onclick="openTab('Graphs')">Graphs</button>
+                <button class="toolbar-button" id="Logtab" onclick="openTab('Log')">Log</button>
+                <button class="toolbar-button" id="Constantstab" onclick="openTab('Constants')">Constants</button>
+            </div>
+            <div class="toolbar-right">
+                <button class="toolbar-button" id="addpanel" onclick="addPanel()">+</button>
+                <button class="toolbar-button" id="removepanel" onclick="removePanel()">-</button>
+            </div>
+            <div class="toolbar-center">
+                <button class="toolbar-button" id="connect" onclick="showConnectionSettings()">Connect</button>
+            </div>
+        </div>
 
-			<div class="tabcontent" id="Graphs">
-				<div class="panel panel-leaf" id="0">
-				</div>
-			</div>
+        <div class="tabcontent" id="Graphs">
+            <div class="panel panel-leaf" id="0">
+            </div>
+        </div>
 
-			<div class="tabcontent" id="Log">
-				<div class="panel panel-leaf" id="0">
-				</div>
-			</div>
+        <div class="tabcontent" id="Log">
+            <div class="panel panel-leaf" id="0">
+            </div>
+        </div>
 
-			<div class="tabcontent" id="Constants">
-				<div class="constantsSettings" id="0">
-					<form name="constants" class="settings-form" id="constantsForm">
-						<div class="settings-group center-inline">
-							<button type="button" class="settings-button inline-button clickable" onclick="sendConstants()">Send to Robot</button>
-							<button type="button" class="settings-button inline-button clickable" onclick="sendConstants(true)">Set as Defaults</button>
-							<button type="button" class="settings-button inline-button clickable" onclick="requestConstantDefaults()">Recall Defaults</button>
-						</div>
-						<div class="settings-group center-div">
-							<!-- Constants inputs will be inserted here by javascript -->
-							<a class="add-settings add-constant clickable" onclick="addConstantToForm()">+</a>
-						</div>
-					</form>
-				</div>
-			</div>
-		</main>
+        <div class="tabcontent" id="Constants">
+            <div class="constantsSettings" id="0">
+                <form name="constants" class="settings-form" id="constantsForm">
+                    <div class="settings-group center-inline">
+                        <button type="button" class="settings-button inline-button clickable" onclick="sendConstants()">Send to Robot</button>
+                        <button type="button" class="settings-button inline-button clickable" onclick="sendConstants(true)">Set as Defaults</button>
+                        <button type="button" class="settings-button inline-button clickable" onclick="requestConstantDefaults()">Recall Defaults</button>
+                    </div>
+                    <div class="settings-group center-div">
+                        <!-- Constants inputs will be inserted here by javascript -->
+                        <a class="add-settings add-constant clickable" onclick="addConstantToForm()">+</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </main>
 
-		<div class="shade"></div>
+        <div class="shade"></div>
 
-		<div class="settings graphSettings">
-			<h3>Graph Settings</h3>
-			<form name="graphSettings" class="settings-form" id="graphSettingsForm">
-				<input name="title" id="title" class="full-width" type="text" placeholder="Title">
-				<br><br>
-				<input name="min" id="min" type="text" placeholder="Min (leave black for auto)">
-				<input name="max" id="max" type="text" placeholder="Max (leave black for auto)">
-				<br>
-				<div class="settings-group" id="value-axes-group">
-					<p>Line Graphs</p>
-					<!-- Value axis inputs will be inserted here by javascript -->
-					<a class="add-settings add-value-axis clickable" onclick="addValueAxisToForm()">+</a>
-				</div>
-				<button type="submit" class="settings-button clickable">Done</button>
-			</form>
-		</div>
+        <div class="settings graphSettings">
+            <h3>Graph Settings</h3>
+            <form name="graphSettings" class="settings-form" id="graphSettingsForm">
+                <input name="title" id="title" class="full-width" type="text" placeholder="Title">
+                <br><br>
+                <input name="min" id="min" type="text" placeholder="Min (leave black for auto)">
+                <input name="max" id="max" type="text" placeholder="Max (leave black for auto)">
+                <br>
+                <div class="settings-group" id="value-axes-group">
+                    <p>Line Graphs</p>
+                    <!-- Value axis inputs will be inserted here by javascript -->
+                    <a class="add-settings add-value-axis clickable" onclick="addValueAxisToForm()">+</a>
+                </div>
+                <button type="submit" class="settings-button clickable">Done</button>
+            </form>
+        </div>
 
-		<div class="settings connectionSettings">
-			<h3>Connection Settings</h3>
-			<form name="connectionSettings" class="settings-form" id="connectionSettingsForm">
-				<input name="ip" id="ip" class="full-width" type="text" placeholder="RoboRIO Address (10.TE.AM.2)">
-				<br><br>
-				<input name="port" id="port" class="full-width" type="text" placeholder="Port Number">
-				<button type="submit" class="settings-button clickable">Connect</button>
-			</form>
-			<p class="reminder">Make sure the robot is on and Log.startServer(port) has been called</p>
-		</div>
-	</body>
-	<script>
-		makeGraphView($("#Graphs .panel-leaf#0"));
-		makeLogView($("#Log .panel-leaf#0"));
-		addConstantToForm();
-	</script>
+        <div class="settings connectionSettings">
+            <h3>Connection Settings</h3>
+            <form name="connectionSettings" class="settings-form" id="connectionSettingsForm">
+                <input name="ip" id="ip" class="full-width" type="text" placeholder="RoboRIO Address (10.TE.AM.2)">
+                <br><br>
+                <input name="port" id="port" class="full-width" type="text" placeholder="Port Number">
+                <button type="submit" class="settings-button clickable">Connect</button>
+            </form>
+            <p class="reminder">Make sure the robot is on and Log.startServer(port) has been called</p>
+        </div>
+    </body>
+    <script>
+        makeGraphView($("#Graphs .panel-leaf#0"));
+        makeLogView($("#Log .panel-leaf#0"));
+        addConstantToForm();
+    </script>
 </html>
