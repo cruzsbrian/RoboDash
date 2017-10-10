@@ -1,4 +1,51 @@
-function showSaveMenu() {}
+var reader = new FileReader();
+
+function showLoadLayout() {
+    $(".dropdown-content").hide();
+
+    $(".loadSettings #title").text("Load Layout");
+
+    $("#loadSettingsForm").submit(function(e) {
+        var form = document.forms["loadSettings"];
+
+        var files = form["loadfile"].files;
+        if (files.length > 0) {
+            reader.readAsText(files[0]);
+
+            reader.onloadend = function() {
+                var data = JSON.parse(reader.result);
+
+                loadLayout(data);
+            };
+        }
+
+        hideSettings($(".loadSettings"));
+
+        e.preventDefault();
+    });
+
+    showSettings($(".loadSettings"));
+}
+
+function showSaveLayout() {
+    $(".dropdown-content").hide();
+
+    $(".saveSettings #title").text("Save Layout");
+
+    $("#saveSettingsForm").unbind("submit");
+    $("#saveSettingsForm").submit(function(e) {
+        var form = document.forms["saveSettings"];
+        var filename = form["savefile"].value;
+
+        download(JSON.stringify(generateLayout()), filename);
+
+        hideSettings($(".saveSettings"));
+
+        e.preventDefault();
+    });
+
+    showSettings($(".saveSettings"));
+}
 
 // returns a JSON object containing the layouts of the graph and log tabs
 function generateLayout() {
@@ -19,6 +66,9 @@ function loadLayout(data) {
 
     graphs.replaceWith(domJSON.toDOM(data.graphs));
     logs.replaceWith(domJSON.toDOM(data.logs));
+
+    // make sure the correct tab is showing (this gets messed up b/c of css attributes being stored)
+    openTab(currentTab);
 }
 
 // creates a link with the data as a download and clicks it

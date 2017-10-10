@@ -19,6 +19,7 @@ function showConnectionSettings() {
     showSettings($(".connectionSettings"));
 
     // have the form connect with submitted
+    $("#connectionSettingsForm").unbind("submit");
     $("#connectionSettingsForm").submit(function(e) {
         connect();
         e.preventDefault();

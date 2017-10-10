@@ -5,6 +5,7 @@
         <script src="ui/tabs.js"></script>
         <script src="ui/panels.js"></script>
         <script src="ui/settings.js"></script>
+        <script src="ui/save.js"></script>
         <script src="log.js"></script>
         <script src="graphs.js"></script>
         <script src="constants.js"></script>
@@ -30,12 +31,12 @@
                 <button class="toolbar-button" id="addpanel" onclick="addPanel()">+</button>
                 <button class="toolbar-button" id="removepanel" onclick="removePanel()">-</button>
                 <div class="dropdown">
-                    <button class="toolbar-button" id="file" onclick="showFileMenu()">File</button>
+                    <button class="toolbar-button" id="file">File</button>
                     <div id="file-dropdown" class="toolbar dropdown-content">
-                        <button class="toolbar-button">Load Layout</button>
-                        <button class="toolbar-button">Load Data</button>
-                        <button class="toolbar-button">Save Layout</button>
-                        <button class="toolbar-button">Save Data</button>
+                        <button class="toolbar-button" onclick="showLoadLayout()">Load Layout</button>
+                        <button class="toolbar-button" onclick="showLoadData()">Load Data</button>
+                        <button class="toolbar-button" onclick="showSaveLayout()">Save Layout</button>
+                        <button class="toolbar-button" onclick="showSaveData()">Save Data</button>
                     </div>
                 </div>
             </div>
@@ -101,8 +102,22 @@
             <p class="reminder">Make sure the robot is on and Log.startServer(port) has been called</p>
         </div>
 
+        <div class="settings loadSettings">
+            <h3 id="title"></h3>
+            <form name="loadSettings" class="settings-form" id="loadSettingsForm">
+                <input name="loadfile" id="loadfile" class="full-width" type="file">
+                <button type="submit" class="settings-button clickable">Load</button>
+            </form>
+        </div>
+
         <div class="settings saveSettings">
-            <h3
+            <h3 id="title"></h3>
+            <form name="saveSettings" class="settings-form" id="saveSettingsForm">
+                <input name="savefile" id="savefile" class="full-width" type="text" placeholder="filename.json">
+                <button type="submit" class="settings-button clickable">Save</button>
+            </form>
+        </div>
+
     </body>
     <script>
         makeGraphView($("#Graphs .panel-leaf#0"));
