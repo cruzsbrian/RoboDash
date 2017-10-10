@@ -58,6 +58,32 @@ div.toolbar button#removepanel.active {
     background-color: #f55;
 }
 
+.dropdown {
+    position: relative;
+    display: block;
+    float: right;
+}
+
+.dropdown-content {
+    position: absolute;
+    display: none;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    z-index: 1;
+    transition: display 0.3s;
+    text-align: left;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content button {
+    display: block;
+    text-align: left;
+    width: 120;
+}
+
 .tabcontent {
     display: none;
     flex: 1 1 auto;
