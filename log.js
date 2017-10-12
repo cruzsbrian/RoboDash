@@ -1,28 +1,59 @@
-var subjects = [];
+// filter: an array of subjects
+function LogView(element, filter) {
+    this.$element = element;
+    this.filter = filter;
 
-function makeLogView($panel) {
-	var $logView = $(document.createElement("div")).addClass("logview");
-	$logView.append($("<div class='column timestamp'>"));
-	$logView.append($("<div class='column subject'>"));
-	$logView.append($("<div class='column message'>"));
-	$panel.append($logView);
+    this.writeAll = function () {
+        for (var i = 0; i < logData.length; i++) {
+           this.writeLog(logData[i]);
+        }
+    };
+
+    this.writeLog = function (log) {
+        if (this.filter !== [] && this.filter.indexOf(log.subject) !== -1) {
+            var $timestampSpan = $("<span>");
+            var $subjectSpan = $("<span>");
+            var $messageSpan = $("<span>");
+
+            $timestampSpan.text("[" + log.t + "s]");
+            $subjectSpan.text("[" + log.subject + "]");
+            $messageSpan.text(log.msg);
+
+            this.$element.find(".timestamp").append($timestampSpan, $("<br>"));
+            this.$element.find(".subject").append($subjectSpan, $("<br>"));
+            this.$element.find(".message").append($messageSpan, $("<br>"));
+        }
+    };
 }
 
-function addLog(data) {
-	var $timestampSpan = $("<span>");
-	var $subjectSpan = $("<span>");
-	var $messageSpan = $("<span>");
+var logViews = [];
+var subjects = [];
+var logData = [];
 
-	$timestampSpan.text("[" + data.t + "s]");
-	$subjectSpan.text("[" + data.subject + "]");
-	$messageSpan.text(data.msg);
+function makeLogView($panel) {
+    var $logView = $(document.createElement("div")).addClass("logview");
+    $logView.append($("<div class='column timestamp'>"));
+    $logView.append($("<div class='column subject'>"));
+    $logView.append($("<div class='column message'>"));
 
-	$(".logview .timestamp").append($timestampSpan, $("<br>"));
-	$(".logview .subject").append($subjectSpan, $("<br>"));
-	$(".logview .message").append($messageSpan, $("<br>"));
+    var logView = new LogView($logView, ["elevator:motorvoltage"]);
+    logViews.push(logView);
+    logView.writeAll();
 
-	// check if subject is in list and add it if it isn't
-	if (subjects.indexOf(data.subject) < 0) {
-		subjects.push(data.subject);
-	}
+    $panel.append($logView);
+}
+
+function addLog(log) {
+    logData.push(log);
+    addSubject(log.subject);
+
+    for (var i = 0; i < logViews.length; i++) {
+        logViews[i].writeLog(log)
+    }
+}
+
+function addSubject(s) {
+    if (subjects.indexOf(s) === -1) {
+        subjects.push(s);
+    }
 }
