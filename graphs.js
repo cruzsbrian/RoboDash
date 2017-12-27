@@ -127,16 +127,18 @@ function makeGraph(id) {
 // refreshes data on all graphs
 function updateGraphs(data) {
     for (var graphId = 0; graphId < graphs.length; graphId++) {
-        var g = graphs[graphId];
-        console.log(g.settings);
+        // check if the graph has been configured yet
+        if ($("#graph" + graphId).hasClass("js-plotly-plot")) {
+            var g = graphs[graphId];
 
-        for (var seriesId = 0; seriesId < g.settings.series.length; seriesId++) {
-            var dataField = g.settings.series[seriesId].dataField;
+            for (var seriesId = 0; seriesId < g.settings.series.length; seriesId++) {
+                var dataField = g.settings.series[seriesId].dataField;
 
-            Plotly.extendTraces("graph" + graphId, {
-                x: [[data["t"]]],
-                y: [[data[dataField]]]
-            }, [seriesId]);
+                Plotly.extendTraces("graph" + graphId, {
+                    x: [[data["t"]]],
+                    y: [[data[dataField]]]
+                }, [seriesId]);
+            }
         }
     }
 }
