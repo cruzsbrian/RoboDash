@@ -1,100 +1,104 @@
 var removing = false;
 
 function addPanel() {
-	// find largest leaf panel
-	var panels = $("#" + currentTab + " .panel.panel-leaf");
-	var largestPanel = panels[0];
-	var largestArea = largestPanel.clientWidth * largestPanel.clientHeight;
-	for (var i = 1; i < panels.length; i++) {
-		p = panels[i];
-		a = p.clientWidth * p.clientHeight;
-		if (a  + 1000 >= largestArea) {	// +1000 to have a bias for later panels (makes it prettier)
-			largestPanel = p;
-			largestArea = a;
-		}
-	}
+    // find largest leaf panel
+    var panels = $("#" + currentTab + " .panel.panel-leaf");
+    var largestPanel = panels[0];
+    var largestArea = largestPanel.clientWidth * largestPanel.clientHeight;
+    for (var i = 1; i < panels.length; i++) {
+        p = panels[i];
+        a = p.clientWidth * p.clientHeight;
+        if (a  + 1000 >= largestArea) {	// +1000 to have a bias for later panels (makes it prettier)
+            largestPanel = p;
+            largestArea = a;
+        }
+    }
 
-	// find largest panel id
-	largestId = 0;
-	for (var i = 0; i < panels.length; i++) {
-		id = parseInt($(panels[i]).attr("id"));
-		if (id > largestId) {
-			largestId = id;
-		}
-	}
+    // find largest panel id
+    largestId = 0;
+    for (var i = 0; i < panels.length; i++) {
+        id = parseInt($(panels[i]).attr("id"));
+        if (id > largestId) {
+            largestId = id;
+        }
+    }
 
-	// create a branch panel to replace it containing the old panel and the new one
-	// make a new panel, get the old panel, and make a branch panel to contain both
-	var $newpanel = $(document.createElement("div")).addClass("panel panel-leaf").attr("id", largestId + 1);
-	var $oldpanel = $(largestPanel);
-	var $branchpanel = $(document.createElement("div")).addClass("panel");
+    // create a branch panel to replace it containing the old panel and the new one
+    // make a new panel, get the old panel, and make a branch panel to contain both
+    var $newpanel = $(document.createElement("div")).addClass("panel panel-leaf").attr("id", largestId + 1);
+    var $oldpanel = $(largestPanel);
+    var $branchpanel = $(document.createElement("div")).addClass("panel");
 
-	if (largestPanel.clientWidth >= largestPanel.clientHeight * 1.25) { // *1.25 for better aspect ratio
-		$branchpanel.addClass("panel-branch-horizontal");
-	} else {
-		$branchpanel.addClass("panel-branch-vertical");
-	}
+    if (largestPanel.clientWidth >= largestPanel.clientHeight * 1.25) { // *1.25 for better aspect ratio
+        $branchpanel.addClass("panel-branch-horizontal");
+    } else {
+        $branchpanel.addClass("panel-branch-vertical");
+    }
 
-	if (currentTab == "Graphs") {
-		makeGraphView($newpanel);
-	} else if (currentTab == "Log") {
-		makeLogView($newpanel);
-	}
+    if (currentTab == "Graphs") {
+        makeGraphView($newpanel);
+    } else if (currentTab == "Log") {
+        makeLogView($newpanel);
+    }
 
-	$branchpanel.insertAfter($oldpanel);
-	$oldpanel.detach().appendTo($branchpanel);
-	$newpanel.appendTo($branchpanel);
+    $branchpanel.insertAfter($oldpanel);
+    $oldpanel.detach().appendTo($branchpanel);
+    $newpanel.appendTo($branchpanel);
 }
 
 function removePanel() {
-	if (!removing) {
-		removing = true;
-		$(".panel.panel-leaf").mouseenter(function() {
-			$panel = $(this);
+    if (!removing) {
+        removing = true;
+        $(".panel.panel-leaf").mouseenter(function() {
+            $panel = $(this);
 
-			// Create covering element with same id as panel
-			$cover = $(document.createElement("div")).addClass("remove-cover").attr("id", this.id);
+            // Create covering element with same id as panel
+            $cover = $(document.createElement("div")).addClass("remove-cover").attr("id", this.id);
 
-			// Give it the same position, but with 1px added in every direction to take care of borders
-			// TODO: this is really ugly, but CSS is evil
-			$cover.css({
-				top: this.offsetTop - 1,
-				left: this.offsetLeft - 1,
-				width: this.offsetWidth + 2,
-				height: this.offsetHeight + 2,
-			});
+            // Give it the same position, but with 1px added in every direction to take care of borders
+            // TODO: this is really ugly, but CSS is evil
+            $cover.css({
+                top: this.offsetTop - 1,
+                left: this.offsetLeft - 1,
+                width: this.offsetWidth + 2,
+                height: this.offsetHeight + 2,
+            });
 
-			// Get rid of the cover when mouse leaves the panel
-			$cover.mouseleave(function () {
-				$cover.remove();
-			});
+            // Get rid of the cover when mouse leaves the panel
+            $cover.mouseleave(function () {
+                $cover.remove();
+            });
 
-			// When clicked, remove cover, move the sibling panel up a level, remove the panel and branch panel
-			$cover.click(function () {
-				$cover.remove();
-				$branchpanel = $panel.parent();
-				$keeppanel = $panel.siblings();
+            // When clicked, remove cover, move the sibling panel up a level, remove the panel and branch panel
+            $cover.click(function () {
+                $cover.remove();
+                $branchpanel = $panel.parent();
+                $keeppanel = $panel.siblings();
 
-				$keeppanel.insertAfter($branchpanel);
-				$panel.remove();
-				$branchpanel.remove();
-			});
+                $keeppanel.insertAfter($branchpanel);
+                $panel.remove();
+                $branchpanel.remove();
 
-			// Put the cover in the place
-			$cover.appendTo($(this.parentElement));
-			$cover.show();
-		});
+                if (currentTab == "Graphs") {
+                    resizeGraphs();
+                }
+            });
 
-		// Add class to show pointer cursor
-		$(".panel.panel-leaf").addClass("panel-removable");
+            // Put the cover in the place
+            $cover.appendTo($(this.parentElement));
+            $cover.show();
+        });
 
-		// Make the remove button red
-		$("#removepanel").addClass("active");
-	} else {
-		removing = false;
-		$(".remove-cover").remove();
-		$(".panel.panel-leaf").removeClass("panel-removable");
-		$(".panel.panel-leaf").unbind("mouseenter");
-		$("#removepanel").removeClass("active");
-	}
+        // Add class to show pointer cursor
+        $(".panel.panel-leaf").addClass("panel-removable");
+
+        // Make the remove button red
+        $("#removepanel").addClass("active");
+    } else {
+        removing = false;
+        $(".remove-cover").remove();
+        $(".panel.panel-leaf").removeClass("panel-removable");
+        $(".panel.panel-leaf").unbind("mouseenter");
+        $("#removepanel").removeClass("active");
+    }
 }

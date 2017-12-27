@@ -5,6 +5,9 @@
     justify-content: center;
     align-items: center;
     position: relative;
+
+    width: inherit;
+    min-width: 0;
 }
 
 .graphview p {

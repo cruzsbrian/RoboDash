@@ -41,6 +41,22 @@ function makeGraphView($panel) {
 
     // put the thing in the place
     $panel.append($graphView);
+
+    // must wait until the thing is actually in the place
+    $(document).ready(function () {
+        resizeGraphs();
+    });
+}
+
+function resizeGraphs() {
+    // resize the other graphs to match
+    var allGraphElements = $(".graphView");
+    for (var i = 0; i < allGraphElements.length; i++) {
+        $view = $(allGraphElements[i]);
+        if ($view.hasClass("js-plotly-plot")) {
+            Plotly.relayout($view.attr("id"), {autosize: true});
+        }
+    }
 }
 
 // use Plotly to write a graph to the DOM given a Graph object's id
@@ -75,7 +91,6 @@ function makeGraph(id) {
             name: displayName
         };
     }
-    console.log(data);
 
     var layout = {
         autosize: true,
