@@ -102,8 +102,19 @@ function makeGraph(id) {
 }
 
 // refreshes data on all graphs
-function updateGraphs() {
-    for (var i = 0; i < graphs.length; i++) {
+function updateGraphs(data) {
+    for (var graphId = 0; graphId < graphs.length; graphId++) {
+        var g = graphs[graphId];
+        console.log(g.settings);
+
+        for (var seriesId = 0; seriesId < g.settings.series.length; seriesId++) {
+            var dataField = g.settings.series[seriesId].dataField;
+
+            Plotly.extendTraces("graph" + graphId, {
+                x: [[data["t"]]],
+                y: [[data[dataField]]]
+            }, [seriesId]);
+        }
     }
 }
 
