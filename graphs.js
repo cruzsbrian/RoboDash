@@ -63,7 +63,7 @@ function resizeGraphs() {
 function makeGraph(id) {
     var g = graphs[id];
 
-    $("#graph" + id + " #placeholder").remove();
+    $("#graph" + id).children().remove();
 
     // create settings button
     var $settingsButton = $("<a class='graph-settings-button clickable' id='" + id + "'>&#x26ed;</a>");
@@ -98,9 +98,10 @@ function makeGraph(id) {
             l: 20,
             r: 40,
             b: 40,
-            t: 20,
+            t: 40,
             pad: 0
         },
+        title: g.settings.title,
         xaxis: {
             type: 'number',
         },
@@ -110,7 +111,7 @@ function makeGraph(id) {
         }
     };
 
-    Plotly.plot("graph" + id, data, layout);
+    Plotly.newPlot("graph" + id, data, layout);
 
     // unbind click from the graphView element
     $("#graph" + id).unbind("click");
