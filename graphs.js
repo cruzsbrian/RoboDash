@@ -111,6 +111,13 @@ function makeGraph(id) {
         }
     };
 
+    if (g.settings.min == "" && g.settings.max != "" ||
+        g.settings.min != "" && g.settings.max == "") {
+        alert("You must set both bounds on a graph, or leave both on auto. Both will be set to auto for now.");
+
+        layout.yaxis.range = [];
+    }
+
     Plotly.newPlot("graph" + id, data, layout);
 
     // unbind click from the graphView element
