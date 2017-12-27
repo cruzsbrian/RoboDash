@@ -4,13 +4,19 @@ function LogView(element, filter) {
     this.filter = filter;
 
     this.writeAll = function () {
+        // clear all the other prints
+        this.$element.find("span").remove();
+        this.$element.find("br").remove();
+
+        // go through all logs to print
         for (var i = 0; i < logData.length; i++) {
            this.writeLog(logData[i]);
         }
     };
 
     this.writeLog = function (log) {
-        if (this.filter !== [] && this.filter.indexOf(log.subject) !== -1) {
+        // if filter is blank (ie print everything) or if the subject is in the filter
+        if (this.filter == 0 || this.filter.indexOf(log.subject) !== -1) {
             var $timestampSpan = $("<span>");
             var $subjectSpan = $("<span>");
             var $messageSpan = $("<span>");
@@ -36,7 +42,7 @@ function makeLogView($panel) {
     $logView.append($("<div class='column subject'>"));
     $logView.append($("<div class='column message'>"));
 
-    var logView = new LogView($logView, ["elevator:motorvoltage"]);
+    var logView = new LogView($logView, []);
     logViews.push(logView);
     logView.writeAll();
 
