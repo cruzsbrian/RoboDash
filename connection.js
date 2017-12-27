@@ -5,7 +5,7 @@ function addData(data) {
     if (data.type === "graph") {
         // append the data object to graphData from graphs.js
         graphData[graphData.length] = data.obj;
-        updateGraphs();
+        updateGraphs(data.obj);
     } else if (data.type === "log") {
         // pass the object to addLog from log.js
         addLog(data.obj);
