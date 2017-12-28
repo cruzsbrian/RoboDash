@@ -97,7 +97,7 @@ function makeGraph(id) {
     var layout = {
         autosize: true,
         margin: {
-            l: 20,
+            l: 40,
             r: 40,
             b: 40,
             t: 40,
