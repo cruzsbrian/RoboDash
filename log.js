@@ -144,7 +144,9 @@ function saveLogSettings(id) {
         }
     }
 
+    // update the logView and refresh stuff
     logViews[id].filter = filter;
+    logViews[id].writeAll();
 
     // hide settings dialog
     hideSettings($(".logSettings"));
