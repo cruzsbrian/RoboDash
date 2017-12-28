@@ -1,81 +1,90 @@
 .shade {
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	height: 100%;
-	width: 100%;
-	background: #000;
-	opacity: 0;
-	display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    background: #000;
+    opacity: 0;
+    display: none;
 }
 
 .settings {
-	position: absolute;
-	width: 400px;
-	left: 50%;
-	top: 20%;
-	margin-left: -220px;
-	padding: 20px;
-	background: white;
-	border: solid 1px #666;
-	display: none;
+    position: absolute;
+    width: 400px;
+    left: 50%;
+    top: 20%;
+    margin-left: -220px;
+    padding: 20px;
+    background: white;
+    border: solid 1px #666;
+    display: none;
+}
+
+.open-settings-button {
+    position: absolute;
+    bottom: 0px;
+    right: 5px;
+
+    font-size: 1.5em;
+    color: #888;
 }
 
 .settings-form {
-	margin: 0;
+    margin: 0;
 }
 
 .settings-form input[type=text] {
-	border: none;
-	border-bottom: 2px solid #888;
-	outline: 0;
-	padding: 3px;
-	margin-right: 1em;
+    border: none;
+    border-bottom: 2px solid #888;
+    outline: 0;
+    padding: 3px;
+    margin-right: 1em;
 }
 
 .settings h3 {
-	margin-top: 0;
-	text-align: center;
+    margin-top: 0;
+    text-align: center;
 }
 
 .settings p.reminder {
-	font-size: 0.8em;
-	margin-bottom: 0;
+    font-size: 0.8em;
+    margin-bottom: 0;
 }
 
 .settings .settings-group {
-	margin: 1.5em 0;
-	width: 100%;
+    margin: 1.5em 0;
+    width: 100%;
 }
 
 .settings #title {
-	font-size: 1.25em;
+    font-size: 1.25em;
 }
 
 .settings .full-width {
-	width: 100%;
+    width: 100%;
 }
 
 .settings .add-settings {
-	float: right;
-	color: #555;
+    float: right;
+    color: #555;
 }
 
 .settings-button {
-	display: block;
-	background: #ddd;
-	margin: 0 auto;
-	margin-top: 30px;
-	border: 1px solid #888;
-	padding: 5px 15px;
+    display: block;
+    background: #ddd;
+    margin: 0 auto;
+    margin-top: 30px;
+    border: 1px solid #888;
+    padding: 5px 15px;
 }
 
 .settings-button:hover {
-	background: #ccc;
+    background: #ccc;
 }
 
 .inline-button {
-	display: inline;
-	margin: 2em 2em;
+    display: inline;
+    margin: 2em 2em;
 }
 

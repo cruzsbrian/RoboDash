@@ -42,7 +42,7 @@ function makeGraphView($panel) {
     // put the thing in the place
     $panel.append($graphView);
 
-    // must wait until the thing is actually in the place
+    // must wait until the thing is actually in the place, then resize all other graphs
     $(document).ready(function () {
         resizeGraphs();
     });
@@ -66,7 +66,7 @@ function makeGraph(id) {
     $("#graph" + id).children().remove();
 
     // create settings button
-    var $settingsButton = $("<a class='graph-settings-button clickable' id='" + id + "'>&#x26ed;</a>");
+    var $settingsButton = $("<a class='open-settings-button clickable' id='" + id + "'>&#x26ed;</a>");
     $settingsButton.click(function() {
         configGraph(id);
     });

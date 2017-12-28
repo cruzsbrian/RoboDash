@@ -1,21 +1,26 @@
 .logview {
-	font-family: monospace;
-	padding: 0.5em;
-	flex: 1 1 auto;
-	display: flex;
-	overflow-y: scroll;
+    font-family: monospace;
+    padding: 0.5em;
+    flex: 1 1 auto;
+    display: flex;
+    overflow-y: scroll;
+    position: relative;
 }
 
 .logview .column {
-	flex: 0 1 auto;
-	flex-flow: column;
-	margin: 0 0.5em;
+    flex: 0 1 auto;
+    flex-flow: column;
+    margin: 0 0.5em;
 }
 
 .logview .timestamp {
-	color: #1111bb;
+    color: #1111bb;
 }
 
 .logview .subject {
-	color: #555555;
+    color: #555555;
+}
+
+#log-filter-group {
+    max-height: 350px;
 }
