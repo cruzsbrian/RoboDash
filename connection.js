@@ -4,7 +4,6 @@ function addData(data) {
     // determine if data is new graph data or a new log
     if (data.type === "graph") {
         // append the data object to graphData from graphs.js
-        graphData[graphData.length] = data.obj;
         updateGraphs(data.obj);
     } else if (data.type === "log") {
         // pass the object to addLog from log.js

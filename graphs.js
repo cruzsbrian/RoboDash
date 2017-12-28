@@ -126,6 +126,7 @@ function makeGraph(id) {
 
 // refreshes data on all graphs
 function updateGraphs(data) {
+    graphData = graphData.concat(data);
     for (var graphId = 0; graphId < graphs.length; graphId++) {
         // check if the graph has been configured yet
         if ($("#graph" + graphId).hasClass("js-plotly-plot")) {
@@ -134,10 +135,21 @@ function updateGraphs(data) {
             for (var seriesId = 0; seriesId < g.settings.series.length; seriesId++) {
                 var dataField = g.settings.series[seriesId].dataField;
 
-                Plotly.extendTraces("graph" + graphId, {
-                    x: [[data["t"]]],
-                    y: [[data[dataField]]]
-                }, [seriesId]);
+                var seriesData = [];
+
+                var seriesX = [];
+                var seriesY = [];
+                for (var i = 0; i < data.length; i++) {
+                    seriesX[seriesX.length] = data[i]["t"];
+                    seriesY[seriesY.length] = data[i][dataField];
+                }
+
+                seriesData = {
+                    x: [seriesX],
+                    y: [seriesY],
+                };
+
+                Plotly.extendTraces("graph" + graphId, seriesData, [seriesId]);
             }
         }
     }
