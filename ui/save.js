@@ -1,8 +1,6 @@
 var reader = new FileReader();
 
 function showLoadLayout() {
-    $(".dropdown-content").hide();
-
     $(".loadSettings #title").text("Load Layout");
 
     $("#loadSettingsForm").submit(function(e) {
@@ -28,8 +26,6 @@ function showLoadLayout() {
 }
 
 function showSaveLayout() {
-    $(".dropdown-content").hide();
-
     $(".saveSettings #title").text("Save Layout");
 
     $("#saveSettingsForm").unbind("submit");
