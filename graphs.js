@@ -80,8 +80,10 @@ function makeGraph(id) {
         var seriesX = [];
         var seriesY = [];
         for (var j = 0; j < graphData.length; j++) {
-            seriesX[seriesX.length] = graphData[j]["t"];
-            seriesY[seriesY.length] = graphData[j][dataField];
+            if (graphData[j][dataField]) {
+                seriesX[seriesX.length] = graphData[j]["t"];
+                seriesY[seriesY.length] = graphData[j][dataField];
+            }
         }
 
         data[data.length] = {
@@ -140,8 +142,10 @@ function updateGraphs(data) {
                 var seriesX = [];
                 var seriesY = [];
                 for (var i = 0; i < data.length; i++) {
-                    seriesX[seriesX.length] = data[i]["t"];
-                    seriesY[seriesY.length] = data[i][dataField];
+                    if (data[i][dataField]) {
+                        seriesX[seriesX.length] = data[i]["t"];
+                        seriesY[seriesY.length] = data[i][dataField];
+                    }
                 }
 
                 seriesData = {
