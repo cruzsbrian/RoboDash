@@ -8,3 +8,15 @@ function openTab(tabName) {
 	$("#" + currentTab).css("display", "flex");
 	$("#" + currentTab + "tab").addClass("active");
 }
+
+function showDropdown() {
+	console.log("opening dropdown");
+	$(".dropdown").addClass("active");
+	
+	$(document).ready(function() {
+		$("body").click(function() {
+			$(".dropdown").removeClass("active");
+			$("body").unbind("click");
+		});
+	});
+}

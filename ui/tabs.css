@@ -74,7 +74,7 @@ div.toolbar button#removepanel.active {
     text-align: left;
 }
 
-.dropdown:hover .dropdown-content {
+.dropdown.active .dropdown-content {
     display: block;
 }
 
