@@ -89,7 +89,7 @@ function sendConstants(defaults) {
     var data = {
         type: "constants",
         defaults: defaults,
-        obj: collectConstants()
+        constants: collectConstants()
     };
 
     send(data);
@@ -98,7 +98,7 @@ function sendConstants(defaults) {
 function requestConstantDefaults() {
     var data = {
         type: "request",
-        obj: "constants"
+        requestedName: "constants"
     };
 
     send(data);
