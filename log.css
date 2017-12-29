@@ -5,6 +5,7 @@
     display: flex;
     overflow-y: scroll;
     position: relative;
+    background: #222;
 }
 
 .logview .column {
@@ -14,11 +15,15 @@
 }
 
 .logview .timestamp {
-    color: #1111bb;
+    color: #777;
 }
 
 .logview .subject {
-    color: #555555;
+    color: #aaa;
+}
+
+.logview .message {
+    color: #eee;
 }
 
 #log-filter-group {
