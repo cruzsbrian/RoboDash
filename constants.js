@@ -35,7 +35,7 @@ function addConstantToForm(constant) {
             + "'>");
 
     // add line break followed by the two inputs before the plus button
-    $("<br id='" + id + "'><br>").insertBefore($("a.add-constant"));
+    $("<br id='" + id + "'><br id='" + id + "'>").insertBefore($("a.add-constant"));
     $deleteButton.insertBefore($("a.add-constant"));
     $keyInput.insertBefore($("a.add-constant"));
     $valInput.insertBefore($("a.add-constant"));
@@ -50,12 +50,6 @@ function clearConstants() {
 function removeConstant(id) {
     // this one gets the inputs and anchor
     $(".constants-inputs [id=" + id + "]").remove();
-
-    // this one gets the newline before the next set
-    $(".constants-inputs br[id=" + (id + 1) + "]").remove();
-
-    // make sure there is no newline immediately preceding the +
-    $(".add-constant").prev("br").remove();
 }
 
 function loadConstants(cList) {
