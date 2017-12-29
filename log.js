@@ -3,6 +3,9 @@ function LogView(element, filter) {
     this.$element = element;
     this.filter = filter;
 
+    // if the user is at the bottom (most recent part) of the log
+    this.keepAtBottom = true;
+
     this.writeAll = function () {
         // clear all the other prints
         this.$element.find("span").remove();
@@ -12,10 +15,13 @@ function LogView(element, filter) {
         for (var i = 0; i < logData.length; i++) {
            this.writeLog(logData[i]);
         }
+
+        // go to the top and then back to the bottom to account for the new size
+        this.$element.scrollTop(0);
     };
 
     this.writeLog = function (log) {
-        // if filter is blank (ie print everything) or if the subject is in the filter
+        // print it if filter is blank (ie print everything) or if the subject is in the filter
         if (this.filter == 0 || this.filter.indexOf(log.subject) !== -1) {
             var $timestampSpan = $("<span>");
             var $subjectSpan = $("<span>");
@@ -29,6 +35,14 @@ function LogView(element, filter) {
             this.$element.find(".subject").append($subjectSpan, $("<br>"));
             this.$element.find(".message").append($messageSpan, $("<br>"));
         }
+    };
+
+    this.scrollToBottom = function () {
+        this.$element.scrollTop(this.maxScrollOffset());
+    };
+
+    this.maxScrollOffset = function() {
+        return this.$element[0].scrollHeight - this.$element[0].clientHeight;
     };
 }
 
@@ -89,6 +103,25 @@ function makeLogView($panel) {
     });
     $logView.append($settingsButton);
 
+    // button to switch on/off locking at the bottom
+    var $bottomButton = $("<a class='log-bottom-button clickable' id='" + id + "'>&#9650;</a>");
+    $bottomButton.click(function() {
+        if (logView.keepAtBottom) {
+            logView.keepAtBottom = false;
+            $bottomButton.html("&#9660;");
+        } else {
+            logView.keepAtBottom = true;
+            $bottomButton.html("&#9650;");
+        }
+    });
+    $logView.append($bottomButton);
+
+    // keep buttons at the bottom
+    $logView.scroll(function() {
+        $settingsButton.css("bottom", -$logView.scrollTop());
+        $bottomButton.css("bottom", -$logView.scrollTop());
+    });
+
     $panel.append($logView);
 }
 
@@ -106,8 +139,8 @@ function configLog(id) {
 
     // have the form save the right log when submitted
     $("#logSettingsForm").submit(function(e) {
-        saveLogSettings(id);
         e.preventDefault();
+        saveLogSettings(id);
     });
 }
 
@@ -154,3 +187,12 @@ function saveLogSettings(id) {
     // clear the form submit handler so another log can use it
     $("#logSettingsForm").unbind("submit");
 }
+
+// check the scroll position of the logs periodically
+var logScrollInterval = setInterval(function() {
+    for (var i = 0; i < logViews.length; i++) {
+        if (logViews[i].keepAtBottom) {
+            logViews[i].scrollToBottom();
+        }
+    }
+}, 50);

@@ -24,3 +24,12 @@
 #log-filter-group {
     max-height: 350px;
 }
+
+.log-bottom-button {
+    position: absolute;
+    bottom: 0px;
+    right: 30px;
+
+    font-size: 1.7em;
+    color: #888;
+}
