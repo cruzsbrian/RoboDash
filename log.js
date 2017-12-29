@@ -50,12 +50,20 @@ var logViews = [];
 var subjects = [];
 var logData = [];
 
-function addLog(log) {
-    logData.push(log);
-    addSubject(log.subject);
+function addLog(newLogs) {
+    logData = logData.concat(newLogs);
 
-    for (var i = 0; i < logViews.length; i++) {
-        logViews[i].writeLog(log)
+    // loop through each new log
+    for (var logIndex = 0; logIndex < newLogs.length; logIndex++) {
+        var log = newLogs[logIndex];
+
+        // add the subject
+        addSubject(log.subject);
+
+        // add the log to all logViews
+        for (var i = 0; i < logViews.length; i++) {
+            logViews[i].writeLog(log)
+        }
     }
 }
 
