@@ -49,6 +49,11 @@ function addPanel() {
 function removePanel() {
     if (!removing) {
         removing = true;
+
+        // show the delete buttons for constants
+        $(".delete-constant").show();
+
+        // (for logs and graphs) when a panel is moused-over
         $(".panel.panel-leaf").mouseenter(function() {
             $panel = $(this);
 
@@ -100,5 +105,6 @@ function removePanel() {
         $(".panel.panel-leaf").removeClass("panel-removable");
         $(".panel.panel-leaf").unbind("mouseenter");
         $("#removepanel").removeClass("active");
+        $(".delete-constant").hide();
     }
 }

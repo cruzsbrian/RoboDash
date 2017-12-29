@@ -1,13 +1,25 @@
 .constantsSettings {
-	width: 50%;
-	margin: 3em auto;
+    width: 50%;
+    margin: 3em auto;
 }
 
 .constantsSettings input[type=text] {
-	font-family: monospace;
+    font-family: monospace;
 }
 
 .constantsSettings button {
-	margin-left: 0.5em;
-	margin-right: 0.5em;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    margin-bottom: 0;
+}
+
+.constants-inputs {
+    position: relative;
+}
+
+.delete-constant {
+    padding: 0 15;
+    position: absolute;
+    left: -30;
+    display: none;
 }
