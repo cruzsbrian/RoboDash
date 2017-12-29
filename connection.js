@@ -17,8 +17,8 @@ function showConnectionSettings() {
     // have the form connect with submitted
     $("#connectionSettingsForm").unbind("submit");
     $("#connectionSettingsForm").submit(function(e) {
-        connect();
         e.preventDefault();
+        connect();
     });
 }
 
@@ -29,29 +29,43 @@ function connect() {
     var ip = settingsForm["ip"].value;
     var port = settingsForm["port"].value;
 
-    ws = new WebSocket("ws://" + ip + ":" + port + "/");
+    try {
+        ws = new WebSocket("ws://" + ip + ":" + port + "/");
 
-    ws.onopen = function(evt) {
-        // change connect button to say "connected" and be green
-        $("button#connect").text("Connected")
-            .addClass("button-green");
-    };
+        ws.onopen = function(evt) {
+            // change connect button to say "connected" and be green
+            $("button#connect").text("Connected")
+                .addClass("button-green");
+        };
 
-    ws.onclose = function(evt) {
-        // change connect button back to saying "connect" and normal color
-        $("button#connect").text("Connect")
-            .removeClass("button-green");
-    };
+        ws.onclose = function(evt) {
+            // change connect button back to saying "connect" and normal color
+            $("button#connect").text("Connect")
+                .removeClass("button-green");
+        };
 
-    ws.onmessage = function(evt) {
-        addData(JSON.parse(evt.data));
-    };
+        ws.onmessage = function(evt) {
+            addData(JSON.parse(evt.data));
+        };
+    } catch(err) {
+        console.log("Error opening websocket");
+        console.log(err.message);
+
+        // flash the connection button red
+        $("button#connect").css("transition", "1.5s");
+        $("button#connect").addClass("button-red");
+        setTimeout(function() {
+            $("button#connect").removeClass("button-red");
+        }, 1000);
+        setTimeout(function() {
+            $("button#connect").css("transition", "");
+        }, 2500);
+    }
 
     hideSettings($(".connectionSettings"));
 }
 
 function send(data) {
-    console.log(data);
     if (ws && ws.readyState === ws.OPEN) {
         ws.send(JSON.stringify(data));
     } else {

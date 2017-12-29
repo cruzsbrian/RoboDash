@@ -54,6 +54,10 @@ div.toolbar button#connect {
     background: #0d4 !important;
 }
 
+.button-red {
+    background: #f65 !important;
+}
+
 div.toolbar button#removepanel.active {
     background-color: #f55;
 }
