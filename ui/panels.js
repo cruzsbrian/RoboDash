@@ -29,7 +29,17 @@ function addPanel() {
     var $oldpanel = $(largestPanel);
     var $branchpanel = $(document.createElement("div")).addClass("panel");
 
-    if (largestPanel.clientWidth >= largestPanel.clientHeight * 1.25) { // *1.25 for better aspect ratio
+    var widthBias = 1;
+    var heightBias = 1;
+    if (currentTab === "Graphs") { // prefer wide graphs
+        widthBias = 1;
+        heightBias = 2;
+    } else if (currentTab === "Log") { // prefer tall logs
+        widthBias = 1.5;
+        heightBias = 1;
+    }
+
+    if (largestPanel.clientWidth * widthBias >= largestPanel.clientHeight * heightBias) {
         $branchpanel.addClass("panel-branch-horizontal");
     } else {
         $branchpanel.addClass("panel-branch-vertical");
