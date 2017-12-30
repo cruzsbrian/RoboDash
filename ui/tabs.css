@@ -2,6 +2,7 @@ div.toolbar {
     flex: 0 1 auto;
     border-bottom: 1px solid #ccc;
     background-color: #f1f1f1;
+    z-index: 1001;
 }
 
 .toolbar-left {
@@ -86,6 +87,11 @@ div.toolbar button#removepanel.active {
     display: block;
     text-align: left;
     width: 120;
+    z-index: 1001;
+}
+
+.plotly .modebar {
+    z-index: 1 !important;
 }
 
 .tabcontent {
