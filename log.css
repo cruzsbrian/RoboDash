@@ -1,11 +1,16 @@
 .logview {
     font-family: monospace;
+    flex: 1 1 auto;
+    display: flex;
+    position: relative;
+    background: #222;
+}
+
+.logView .scrollView {
     padding: 0.5em;
     flex: 1 1 auto;
     display: flex;
     overflow-y: scroll;
-    position: relative;
-    background: #222;
 }
 
 .logview .column {
@@ -30,10 +35,14 @@
     max-height: 350px;
 }
 
+.logView .open-settings-button {
+    right: 20px;
+}
+
 .log-bottom-button {
     position: absolute;
     bottom: 0px;
-    right: 30px;
+    right: 45px;
 
     font-size: 1.7em;
     color: #888;

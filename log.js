@@ -1,6 +1,6 @@
 // filter: an array of subjects
-function LogView(element, filter) {
-    this.$element = element;
+function LogView(scrollView, filter) {
+    this.$scrollView = scrollView;
     this.filter = filter;
 
     // if the user is at the bottom (most recent part) of the log
@@ -8,8 +8,8 @@ function LogView(element, filter) {
 
     this.writeAll = function () {
         // clear all the other prints
-        this.$element.find("span").remove();
-        this.$element.find("br").remove();
+        this.$scrollView.find("span").remove();
+        this.$scrollView.find("br").remove();
 
         // go through all logs to print
         for (var i = 0; i < logData.length; i++) {
@@ -17,7 +17,7 @@ function LogView(element, filter) {
         }
 
         // go to the top and then back to the bottom to account for the new size
-        this.$element.scrollTop(0);
+        this.$scrollView.scrollTop(0);
     };
 
     this.writeLog = function (log) {
@@ -31,18 +31,18 @@ function LogView(element, filter) {
             $subjectSpan.text("[" + log.subject + "]");
             $messageSpan.text(log.msg);
 
-            this.$element.find(".timestamp").append($timestampSpan, $("<br>"));
-            this.$element.find(".subject").append($subjectSpan, $("<br>"));
-            this.$element.find(".message").append($messageSpan, $("<br>"));
+            this.$scrollView.find(".timestamp").append($timestampSpan, $("<br>"));
+            this.$scrollView.find(".subject").append($subjectSpan, $("<br>"));
+            this.$scrollView.find(".message").append($messageSpan, $("<br>"));
         }
     };
 
     this.scrollToBottom = function () {
-        this.$element.scrollTop(this.maxScrollOffset());
+        this.$scrollView.scrollTop(this.maxScrollOffset());
     };
 
     this.maxScrollOffset = function() {
-        return this.$element[0].scrollHeight - this.$element[0].clientHeight;
+        return this.$scrollView[0].scrollHeight - this.$scrollView[0].clientHeight;
     };
 }
 
@@ -97,11 +97,15 @@ function makeLogView($panel) {
 
     var $logView = $(document.createElement("div")).addClass("logview");
     $logView.attr("id", "log" + id);
-    $logView.append($("<div class='column timestamp'>"));
-    $logView.append($("<div class='column subject'>"));
-    $logView.append($("<div class='column message'>"));
 
-    var logView = new LogView($logView, []);
+    var $scrollView = $("<div class='scrollView' id='" + id + "'>");
+    $logView.append($scrollView);
+
+    $scrollView.append($("<div class='column timestamp'>"));
+    $scrollView.append($("<div class='column subject'>"));
+    $scrollView.append($("<div class='column message'>"));
+
+    var logView = new LogView($scrollView, []);
     logViews[id] = logView;
     logView.writeAll();
 
