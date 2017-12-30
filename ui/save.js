@@ -3,7 +3,11 @@ var reader = new FileReader();
 function showLoadLayout() {
     $(".loadSettings #title").text("Load Layout");
 
+    // unbind in case it was already used for something else
+    $("#loadSettingsForm").unbind("submit");
     $("#loadSettingsForm").submit(function(e) {
+        e.preventDefault();
+
         var form = document.forms["loadSettings"];
 
         var files = form["loadfile"].files;
@@ -18,9 +22,9 @@ function showLoadLayout() {
         }
 
         hideSettings($(".loadSettings"));
-
-        e.preventDefault();
     });
+
+    $(".dropdown").removeClass("active");
 
     showSettings($(".loadSettings"));
 }
@@ -28,17 +32,71 @@ function showLoadLayout() {
 function showSaveLayout() {
     $(".saveSettings #title").text("Save Layout");
 
+    // unbind in case it was already used for something else
     $("#saveSettingsForm").unbind("submit");
     $("#saveSettingsForm").submit(function(e) {
+        e.preventDefault();
+
         var form = document.forms["saveSettings"];
         var filename = form["savefile"].value;
 
+        console.log(generateLayout());
         download(JSON.stringify(generateLayout()), filename);
 
         hideSettings($(".saveSettings"));
-
-        e.preventDefault();
     });
+
+    $(".dropdown").removeClass("active");
+
+    showSettings($(".saveSettings"));
+}
+
+function showLoadData() {
+    $(".loadSettings #title").text("Load Data");
+
+    // unbind in case it was already used for something else
+    $("#loadSettingsForm").unbind("submit");
+    $("#loadSettingsForm").submit(function(e) {
+        e.preventDefault();
+
+        var form = document.forms["loadSettings"];
+
+        var files = form["loadfile"].files;
+        if (files.length > 0) {
+            reader.readAsText(files[0]);
+
+            reader.onloadend = function() {
+                var data = JSON.parse(reader.result);
+
+                loadData(data);
+            };
+        }
+
+        hideSettings($(".loadSettings"));
+    });
+
+    $(".dropdown").removeClass("active");
+
+    showSettings($(".loadSettings"));
+}
+
+function showSaveData() {
+    $(".saveSettings #title").text("Save Data");
+
+    // unbind in case it was already used for something else
+    $("#saveSettingsForm").unbind("submit");
+    $("#saveSettingsForm").submit(function(e) {
+        e.preventDefault();
+
+        var form = document.forms["saveSettings"];
+        var filename = form["savefile"].value;
+
+        download(JSON.stringify(collectData()), filename);
+
+        hideSettings($(".saveSettings"));
+    });
+
+    $(".dropdown").removeClass("active");
 
     showSettings($(".saveSettings"));
 }
@@ -55,6 +113,15 @@ function generateLayout() {
     return result;
 }
 
+function collectData() {
+    var result = {};
+
+    result.graphData = graphData;
+    result.logData = logData;
+
+    return result;
+}
+
 // replaces the graph and log tabs with the layout in data
 function loadLayout(data) {
     var graphs = document.getElementById("Graphs");
@@ -65,6 +132,14 @@ function loadLayout(data) {
 
     // make sure the correct tab is showing (this gets messed up b/c of css attributes being stored)
     openTab(currentTab);
+}
+
+function loadData(data) {
+    graphData = data.graphData;
+    logData = data.logData;
+
+    rewriteAllGraphs();
+    rewriteAllLogs();
 }
 
 // creates a link with the data as a download and clicks it

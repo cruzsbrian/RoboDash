@@ -91,11 +91,15 @@ function addSubject(s) {
     }
 }
 
-function clearLogs() {
-    logData = [];
+function rewriteAllLogs() {
     for (var i = 0; i < logViews.length; i++) {
         logViews[i].writeAll();
     }
+}
+
+function clearLogs() {
+    logData = [];
+    rewriteAllLogs();
 }
 
 function makeLogView($panel) {

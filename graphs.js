@@ -156,15 +156,19 @@ function updateGraphs(data) {
     }
 }
 
-// clears graphData and refreshes graphs
-function clearGraphs() {
-    graphData = [];
+function rewriteAllGraphs() {
     for (var i = 0; i < graphs.length; i++) {
         // check if the graph has been configured yet
         if ($("#graph" + i).hasClass("js-plotly-plot")) {
             makeGraph(i);
         }
     }
+}
+
+// clears graphData and refreshes graphs
+function clearGraphs() {
+    graphData = [];
+    rewriteAllGraphs();
 }
 
 // open dialog so user can edit settings of a graph
