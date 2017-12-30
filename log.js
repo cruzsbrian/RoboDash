@@ -91,6 +91,13 @@ function addSubject(s) {
     }
 }
 
+function clearLogs() {
+    logData = [];
+    for (var i = 0; i < logViews.length; i++) {
+        logViews[i].writeAll();
+    }
+}
+
 function makeLogView($panel) {
     // get id (0-indexed) for the graph
     var id = parseInt($panel.attr("id"));

@@ -13,9 +13,6 @@ function Graph() {
             dataField: ''
         }]
     };
-
-    // variable to hold AmCharts object
-    this.chart = null;
 }
 
 function makeGraphView($panel) {
@@ -155,6 +152,17 @@ function updateGraphs(data) {
 
                 Plotly.extendTraces("graph" + graphId, seriesData, [seriesId]);
             }
+        }
+    }
+}
+
+// clears graphData and refreshes graphs
+function clearGraphs() {
+    graphData = [];
+    for (var i = 0; i < graphs.length; i++) {
+        // check if the graph has been configured yet
+        if ($("#graph" + i).hasClass("js-plotly-plot")) {
+            makeGraph(i);
         }
     }
 }
