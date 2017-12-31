@@ -39,10 +39,13 @@ function addPanel() {
         heightBias = 1;
     }
 
+    var branchType;
     if (largestPanel.clientWidth * widthBias >= largestPanel.clientHeight * heightBias) {
         $branchpanel.addClass("panel-branch-horizontal");
+        branchType = 'h';
     } else {
         $branchpanel.addClass("panel-branch-vertical");
+        branchType = 'v';
     }
 
     if (currentTab == "Graphs") {
@@ -54,6 +57,9 @@ function addPanel() {
     $branchpanel.insertAfter($oldpanel);
     $oldpanel.detach().appendTo($branchpanel);
     $newpanel.appendTo($branchpanel);
+
+    // record-keeping for saving/loading
+    addPanelToLayout(currentTab, branchType, parseInt($oldpanel.attr("id")), largestId + 1);
 }
 
 function removePanel() {
