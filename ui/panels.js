@@ -23,12 +23,7 @@ function addPanel() {
         }
     }
 
-    // create a branch panel to replace it containing the old panel and the new one
-    // make a new panel, get the old panel, and make a branch panel to contain both
-    var $newpanel = $(document.createElement("div")).addClass("panel panel-leaf").attr("id", largestId + 1);
-    var $oldpanel = $(largestPanel);
-    var $branchpanel = $(document.createElement("div")).addClass("panel");
-
+    // determine if making a horizontal or vertical branch
     var widthBias = 1;
     var heightBias = 1;
     if (currentTab === "Graphs") { // prefer wide graphs
@@ -41,25 +36,39 @@ function addPanel() {
 
     var branchType;
     if (largestPanel.clientWidth * widthBias >= largestPanel.clientHeight * heightBias) {
-        $branchpanel.addClass("panel-branch-horizontal");
         branchType = 'h';
     } else {
-        $branchpanel.addClass("panel-branch-vertical");
         branchType = 'v';
     }
 
-    if (currentTab == "Graphs") {
+    addPanelFromInfo(currentTab, branchType, parseInt(largestPanel.id), largestId + 1);
+}
+
+function addPanelFromInfo(tab, branchType, branchId, newId) {
+    // record-keeping for saving/loading
+    addPanelToLayout(currentTab, branchType, branchId, newId);
+
+    // create a branch panel to replace it containing the old panel and the new one
+    // make a new panel, get the old panel, and make a branch panel to contain both
+    var $newpanel = $(document.createElement("div")).addClass("panel panel-leaf").attr("id", newId);
+    var $oldpanel = $($("#" + tab + " .panel[id=" + branchId + "]")[0]); // do the array thing so that we only get one
+    var $branchpanel = $(document.createElement("div")).addClass("panel");
+
+    if (branchType == 'h') {
+        $branchpanel.addClass("panel-branch-horizontal");
+    } else {
+        $branchpanel.addClass("panel-branch-vertical");
+    }
+
+    if (tab == "Graphs") {
         makeGraphView($newpanel);
-    } else if (currentTab == "Log") {
+    } else if (tab == "Log") {
         makeLogView($newpanel);
     }
 
     $branchpanel.insertAfter($oldpanel);
     $oldpanel.detach().appendTo($branchpanel);
     $newpanel.appendTo($branchpanel);
-
-    // record-keeping for saving/loading
-    addPanelToLayout(currentTab, branchType, parseInt($oldpanel.attr("id")), largestId + 1);
 }
 
 function removePanel() {

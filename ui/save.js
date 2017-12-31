@@ -104,11 +104,9 @@ function showSaveData() {
 // returns a JSON object containing the layouts of the graph and log tabs
 function generateLayout() {
     var result = {};
-    var graphs = document.getElementById("Graphs");
-    var logs = document.getElementById("Log");
 
-    result.graphs = domJSON.toJSON(graphs);
-    result.logs = domJSON.toJSON(logs);
+    result.graphLayout = graphLayout;
+    result.logLayout = logLayout;
 
     return result;
 }
@@ -124,14 +122,9 @@ function collectData() {
 
 // replaces the graph and log tabs with the layout in data
 function loadLayout(data) {
-    var graphs = document.getElementById("Graphs");
-    var logs = document.getElementById("Log");
-
-    graphs.replaceWith(domJSON.toDOM(data.graphs));
-    logs.replaceWith(domJSON.toDOM(data.logs));
-
-    // make sure the correct tab is showing (this gets messed up b/c of css attributes being stored)
-    openTab(currentTab);
+    // build the DOM layouts
+    buildLayout("Graphs", data.graphLayout);
+    buildLayout("Log", data.logLayout);
 }
 
 function loadData(data) {
