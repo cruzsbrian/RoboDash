@@ -106,15 +106,19 @@ function removePanel() {
             // When clicked, remove cover, move the sibling panel up a level, remove the panel and branch panel
             $cover.click(function () {
                 $cover.remove();
-                $branchpanel = $panel.parent();
-                $keeppanel = $panel.siblings();
 
-                $keeppanel.insertAfter($branchpanel);
-                $panel.remove();
-                $branchpanel.remove();
+                // make sure there is at least one panel left
+                if ($("#" + currentTab + " .panel.panel-leaf").length > 1) {
+                    $branchpanel = $panel.parent();
+                    $keeppanel = $panel.siblings();
 
-                if (currentTab == "Graphs") {
-                    resizeGraphs();
+                    $keeppanel.insertAfter($branchpanel);
+                    $panel.remove();
+                    $branchpanel.remove();
+
+                    if (currentTab == "Graphs") {
+                        resizeGraphs();
+                    }
                 }
             });
 
