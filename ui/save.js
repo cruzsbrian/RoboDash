@@ -40,7 +40,6 @@ function showSaveLayout() {
         var form = document.forms["saveSettings"];
         var filename = form["savefile"].value;
 
-        console.log(generateLayout());
         download(JSON.stringify(generateLayout()), filename);
 
         hideSettings($(".saveSettings"));
@@ -108,6 +107,16 @@ function generateLayout() {
     result.graphLayout = graphLayout;
     result.logLayout = logLayout;
 
+    result.graphSettings = [];
+    for (var i = 0; i < graphs.length; i++) {
+        result.graphSettings.push(graphs[i].settings);
+    }
+
+    result.logSettings = [];
+    for (var i = 0; i < logViews.length; i++) {
+        result.logSettings.push(logViews[i].settings);
+    }
+
     return result;
 }
 
@@ -125,6 +134,19 @@ function loadLayout(data) {
     // build the DOM layouts
     buildLayout("Graphs", data.graphLayout);
     buildLayout("Log", data.logLayout);
+
+    // load the old settings (blank graph and logs object have been made by buildLayout)
+    for (var i = 0; i < graphs.length; i++) {
+        graphs[i].settings = data.graphSettings[i];
+    }
+
+    for (var i = 0; i < logViews.length; i++) {
+        logViews[i].settings = data.logSettings[i];
+    }
+
+    // apply the new settings
+    rewriteAllGraphs();
+    rewriteAllLogs();
 }
 
 function loadData(data) {

@@ -11,7 +11,8 @@ function Graph() {
         series: [{
             displayName: '',
             dataField: ''
-        }]
+        }],
+        written: false
     };
 }
 
@@ -119,6 +120,9 @@ function makeGraph(id) {
 
     Plotly.newPlot("graph" + id, data, layout);
 
+    // record that it has been initially configured
+    g.settings.written = true;
+
     // unbind click from the graphView element
     $("#graph" + id).unbind("click");
 }
@@ -128,7 +132,7 @@ function updateGraphs(data) {
     graphData = graphData.concat(data);
     for (var graphId = 0; graphId < graphs.length; graphId++) {
         // check if the graph has been configured yet
-        if ($("#graph" + graphId).hasClass("js-plotly-plot")) {
+        if (graphs[graphId].settings.written) {
             var g = graphs[graphId];
 
             for (var seriesId = 0; seriesId < g.settings.series.length; seriesId++) {
@@ -159,7 +163,7 @@ function updateGraphs(data) {
 function rewriteAllGraphs() {
     for (var i = 0; i < graphs.length; i++) {
         // check if the graph has been configured yet
-        if ($("#graph" + i).hasClass("js-plotly-plot")) {
+        if (graphs[i].settings.written) {
             makeGraph(i);
         }
     }

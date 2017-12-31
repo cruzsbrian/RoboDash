@@ -1,10 +1,12 @@
 // filter: an array of subjects
 function LogView(scrollView, filter) {
     this.$scrollView = scrollView;
-    this.filter = filter;
+    this.settings = {
+        filter: filter,
 
-    // if the user is at the bottom (most recent part) of the log
-    this.keepAtBottom = true;
+        // if the user is at the bottom (most recent part) of the log
+        keepAtBottom: true
+    };
 
     this.writeAll = function () {
         // clear all the other prints
@@ -22,7 +24,7 @@ function LogView(scrollView, filter) {
 
     this.writeLog = function (log) {
         // print it if filter is blank (ie print everything) or if the subject is in the filter
-        if (this.filter == 0 || this.filter.indexOf(log.subject) !== -1) {
+        if (this.settings.filter == 0 || this.settings.filter.indexOf(log.subject) !== -1) {
             var $timestampSpan = $("<span>");
             var $subjectSpan = $("<span>");
             var $messageSpan = $("<span>");
@@ -94,6 +96,14 @@ function addSubject(s) {
 function rewriteAllLogs() {
     for (var i = 0; i < logViews.length; i++) {
         logViews[i].writeAll();
+
+        // make sure the bottomButton is facing the right way
+        var $bottomButton = $(".log-bottom-button[id=" + i + "]");
+        if (logViews[i].settings.keepAtBottom) {
+            $bottomButton.html("&#9650;");
+        } else {
+            $bottomButton.html("&#9660;");
+        }
     }
 }
 
@@ -129,11 +139,11 @@ function makeLogView($panel) {
     // button to switch on/off locking at the bottom
     var $bottomButton = $("<a class='log-bottom-button clickable' id='" + id + "'>&#9650;</a>");
     $bottomButton.click(function() {
-        if (logView.keepAtBottom) {
-            logView.keepAtBottom = false;
+        if (logView.settings.keepAtBottom) {
+            logView.settings.keepAtBottom = false;
             $bottomButton.html("&#9660;");
         } else {
-            logView.keepAtBottom = true;
+            logView.settings.keepAtBottom = true;
             $bottomButton.html("&#9650;");
         }
     });
@@ -178,7 +188,7 @@ function loadLogSettings(id) {
 
         // check if it's in the filter
         var filterName = box.id;
-        if (l.filter.indexOf(filterName) !== -1) {
+        if (l.settings.filter.indexOf(filterName) !== -1) {
             box.checked = true;
         } else {
             box.checked = false;
@@ -201,7 +211,7 @@ function saveLogSettings(id) {
     }
 
     // update the logView and refresh stuff
-    logViews[id].filter = filter;
+    logViews[id].settings.filter = filter;
     logViews[id].writeAll();
 
     // hide settings dialog
@@ -214,7 +224,7 @@ function saveLogSettings(id) {
 // check the scroll position of the logs periodically
 var logScrollInterval = setInterval(function() {
     for (var i = 0; i < logViews.length; i++) {
-        if (logViews[i].keepAtBottom) {
+        if (logViews[i].settings.keepAtBottom) {
             logViews[i].scrollToBottom();
         }
     }
