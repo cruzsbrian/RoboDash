@@ -5,18 +5,8 @@ function addConstantToForm(constant) {
         val: ''
     };
 
-    // find highest constant number
-    var constantInputs = $(".constant-key");
-    var largestId = -1;
-    for (var i = 0; i < constantInputs.length; i++) {
-        var id = parseInt($(constantInputs[i]).attr("id"));
-        if (id > largestId) {
-            largestId = id;
-        }
-    }
-
     // id for the new constants
-    var id = largestId + 1;
+    var id = largestConstantId() + 1;
 
     // make the delete button
     var $deleteButton = $("<a class='delete-constant clickable' id='" + id + "'>-</a>");
@@ -34,11 +24,31 @@ function addConstantToForm(constant) {
             + "' type='text' placeholder='val' value='" + constant.val
             + "'>");
 
+    // if user presses tab at the last valInput, make a new set
+    $valInput.keydown(function (e) {
+        if (e.which == 9 && largestConstantId() == id) {
+            addConstantToForm();
+        }
+    });
+
     // add line break followed by the two inputs before the plus button
-    $("<br id='" + id + "'><br id='" + id + "'>").insertBefore($("a.add-constant"));
-    $deleteButton.insertBefore($("a.add-constant"));
-    $keyInput.insertBefore($("a.add-constant"));
-    $valInput.insertBefore($("a.add-constant"));
+    $(".constants-inputs").append("<br id='" + id + "'><br id='" + id + "'>");
+    $(".constants-inputs").append($keyInput);
+    $(".constants-inputs").append($valInput);
+    $(".constants-inputs").append($deleteButton);
+}
+
+function largestConstantId() {
+    var constantInputs = $(".constant-key");
+    var largestId = -1;
+    for (var i = 0; i < constantInputs.length; i++) {
+        var id = parseInt($(constantInputs[i]).attr("id"));
+        if (id > largestId) {
+            largestId = id;
+        }
+    }
+
+    return largestId;
 }
 
 function clearConstants() {

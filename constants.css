@@ -1,6 +1,13 @@
+#Constants {
+    overflow-y: scroll;
+}
+
 .constantsSettings {
-    width: 50%;
-    margin: 3em auto;
+    margin: 0 auto;
+}
+
+#constantsForm {
+    margin: 3em;
 }
 
 .constantsSettings input[type=text] {
@@ -18,8 +25,7 @@
 }
 
 .delete-constant {
-    padding: 0 15;
+    padding: 0 5;
     position: absolute;
-    left: -30;
     display: none;
 }

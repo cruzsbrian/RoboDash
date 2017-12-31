@@ -1,47 +1,51 @@
 var removing = false;
 
 function addPanel() {
-    // find largest leaf panel
-    var panels = $("#" + currentTab + " .panel.panel-leaf");
-    var largestPanel = panels[0];
-    var largestArea = largestPanel.clientWidth * largestPanel.clientHeight;
-    for (var i = 1; i < panels.length; i++) {
-        p = panels[i];
-        a = p.clientWidth * p.clientHeight;
-        if (a  + 1000 >= largestArea) {	// +1000 to have a bias for later panels (makes it prettier)
-            largestPanel = p;
-            largestArea = a;
-        }
-    }
-
-    // find largest panel id
-    largestId = 0;
-    for (var i = 0; i < panels.length; i++) {
-        id = parseInt($(panels[i]).attr("id"));
-        if (id > largestId) {
-            largestId = id;
-        }
-    }
-
-    // determine if making a horizontal or vertical branch
-    var widthBias = 1;
-    var heightBias = 1;
-    if (currentTab === "Graphs") { // prefer wide graphs
-        widthBias = 1;
-        heightBias = 2;
-    } else if (currentTab === "Log") { // prefer tall logs
-        widthBias = 1.5;
-        heightBias = 1;
-    }
-
-    var branchType;
-    if (largestPanel.clientWidth * widthBias >= largestPanel.clientHeight * heightBias) {
-        branchType = 'h';
+    if (currentTab === "Constants") {
+        addConstantToForm();
     } else {
-        branchType = 'v';
-    }
+        // find largest leaf panel
+        var panels = $("#" + currentTab + " .panel.panel-leaf");
+        var largestPanel = panels[0];
+        var largestArea = largestPanel.clientWidth * largestPanel.clientHeight;
+        for (var i = 1; i < panels.length; i++) {
+            p = panels[i];
+            a = p.clientWidth * p.clientHeight;
+            if (a  + 1000 >= largestArea) {	// +1000 to have a bias for later panels (makes it prettier)
+                largestPanel = p;
+                largestArea = a;
+            }
+        }
 
-    addPanelFromInfo(currentTab, branchType, parseInt(largestPanel.id), largestId + 1);
+        // find largest panel id
+        largestId = 0;
+        for (var i = 0; i < panels.length; i++) {
+            id = parseInt($(panels[i]).attr("id"));
+            if (id > largestId) {
+                largestId = id;
+            }
+        }
+
+        // determine if making a horizontal or vertical branch
+        var widthBias = 1;
+        var heightBias = 1;
+        if (currentTab === "Graphs") { // prefer wide graphs
+            widthBias = 1;
+            heightBias = 2;
+        } else if (currentTab === "Log") { // prefer tall logs
+            widthBias = 1.5;
+            heightBias = 1;
+        }
+
+        var branchType;
+        if (largestPanel.clientWidth * widthBias >= largestPanel.clientHeight * heightBias) {
+            branchType = 'h';
+        } else {
+            branchType = 'v';
+        }
+
+        addPanelFromInfo(currentTab, branchType, parseInt(largestPanel.id), largestId + 1);
+    }
 }
 
 function addPanelFromInfo(tab, branchType, branchId, newId) {
