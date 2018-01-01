@@ -47,19 +47,16 @@ function connect() {
         ws.onmessage = function(evt) {
             addData(JSON.parse(evt.data));
         };
+
+        ws.onerror = function(evt) {
+            // the websocket will throw an error to the console itself
+            flashConnectionRed();
+        }
     } catch(err) {
         console.log("Error opening websocket");
         console.log(err.message);
 
-        // flash the connection button red
-        $("button#connect").css("transition", "1.5s");
-        $("button#connect").addClass("button-red");
-        setTimeout(function() {
-            $("button#connect").removeClass("button-red");
-        }, 1000);
-        setTimeout(function() {
-            $("button#connect").css("transition", "");
-        }, 2500);
+        flashConnectionRed();
     }
 
     hideSettings($(".connectionSettings"));
@@ -71,4 +68,15 @@ function send(data) {
     } else {
         console.log("Sending failed b/c WebSocket is not open.");
     }
+}
+
+function flashConnectionRed() {
+    $("button#connect").css("transition", "1.5s");
+    $("button#connect").addClass("button-red");
+    setTimeout(function() {
+        $("button#connect").removeClass("button-red");
+    }, 1000);
+    setTimeout(function() {
+        $("button#connect").css("transition", "");
+    }, 2500);
 }
